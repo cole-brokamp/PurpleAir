@@ -22,3 +22,43 @@ Install the development version of PurpleAir with:
 ``` r
 pak::pak("cole-brokamp/PurpleAir")
 ```
+
+## Usage
+
+``` r
+library(PurpleAir)
+```
+
+Get the latest data from a single PurpleAir sensor, defined by its
+[sensor key](https://community.purpleair.com/t/sensor-index/4000):
+
+``` r
+get_sensor_data(sensor_index = 175413, fields = c("name", "last_seen", "pm2.5_cf_1", "pm2.5_atm"))
+#> $last_seen
+#> [1] 1720201543
+#> 
+#> $name
+#> [1] "JN-Clifton,OH"
+#> 
+#> $pm2.5_atm
+#> [1] 4.7
+#> 
+#> $pm2.5_cf_1
+#> [1] 4.7
+```
+
+Get the latest data from many PurpleAir sensors, defined by their sensor
+keys,
+
+``` r
+get_sensors_data(x = as.integer(c(175257, 175413)), fields = c("name", "last_seen", "pm2.5_cf_1", "pm2.5_atm"))
+#> # A tibble: 2 × 5
+#>   sensor_index last_seen           name          pm2.5_atm pm2.5_cf_1
+#>          <int> <dttm>              <chr>             <dbl>      <dbl>
+#> 1       175257 2024-07-05 13:46:00 Lillard             3.6        3.6
+#> 2       175413 2024-07-05 13:45:43 JN-Clifton,OH       4.7        4.7
+```
+
+a geographic bounding box,
+
+or a date from which sensors must have been modified since.
