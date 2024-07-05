@@ -13,7 +13,22 @@ status](https://www.r-pkg.org/badges/version/PurpleAir)](https://CRAN.R-project.
 <!-- badges: end -->
 
 The goal of PurpleAir is to provide read access to the [PurpleAir
-API](https://api.purpleair.com/)
+API](https://api.purpleair.com/) to retrieve real-time and historical
+data from PurpleAir sensors.
+
+Please note that usage of this package must abide by the requirements of
+the PurpleAir API. From their website:
+
+> PurpleAir was founded on principles of openness, sharing, and
+> community. It is to strengthen these principles and ensure the success
+> of our entire community that we put together updated [terms of
+> service](https://www.purpleair.com/terms), [data
+> license](https://www.purpleair.com/license), and [data
+> attribution](https://www.purpleair.com/attribution) requirements when
+> using PurpleAir data and this API. Please take a moment to review them
+> and note the attribution guide and data license agreement. If you have
+> any questions or need more information, we have an excellent resource
+> at <https://community.purpleair.com/c/data/api/>.
 
 ## Installation
 
@@ -41,16 +56,16 @@ Get the latest data from a single PurpleAir sensor, defined by its
 get_sensor_data(sensor_index = 175413,
                 fields = c("name", "last_seen", "pm2.5_cf_1", "pm2.5_atm"))
 #> $last_seen
-#> [1] "2024-07-05 14:11:43 EDT"
+#> [1] "2024-07-05 14:37:43 EDT"
 #> 
 #> $name
 #> [1] "JN-Clifton,OH"
 #> 
 #> $pm2.5_atm
-#> [1] 3.8
+#> [1] 4.6
 #> 
 #> $pm2.5_cf_1
-#> [1] 3.8
+#> [1] 4.6
 ```
 
 Get the latest data from many PurpleAir sensors, defined by their sensor
@@ -62,8 +77,8 @@ get_sensors_data(x = as.integer(c(175257, 175413)),
 #> # A tibble: 2 × 5
 #>   sensor_index last_seen           name          pm2.5_atm pm2.5_cf_1
 #>          <int> <dttm>              <chr>             <dbl>      <dbl>
-#> 1       175257 2024-07-05 14:12:00 Lillard             3.7        3.7
-#> 2       175413 2024-07-05 14:11:43 JN-Clifton,OH       3.8        3.8
+#> 1       175257 2024-07-05 14:38:00 Lillard             4.4        4.4
+#> 2       175413 2024-07-05 14:39:43 JN-Clifton,OH       5          5
 ```
 
 a geographic bounding box,

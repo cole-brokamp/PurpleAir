@@ -21,7 +21,11 @@ knitr::opts_chunk$set(
 [![R-CMD-check](https://github.com/cole-brokamp/PurpleAir/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/cole-brokamp/PurpleAir/actions/workflows/R-CMD-check.yaml)
 <!-- badges: end -->
 
-The goal of PurpleAir is to provide read access to the [PurpleAir API](https://api.purpleair.com/)
+The goal of PurpleAir is to provide read access to the [PurpleAir API](https://api.purpleair.com/) to retrieve real-time and historical data from PurpleAir sensors.
+
+Please note that usage of this package must abide by the requirements of the PurpleAir API.  From their website:
+
+> PurpleAir was founded on principles of openness, sharing, and community. It is to strengthen these principles and ensure the success of our entire community that we put together updated [terms of service](https://www.purpleair.com/terms), [data license](https://www.purpleair.com/license), and [data attribution](https://www.purpleair.com/attribution) requirements when using PurpleAir data and this API. Please take a moment to review them and note the attribution guide and data license agreement. If you have any questions or need more information, we have an excellent resource at https://community.purpleair.com/c/data/api/. 
 
 ## Installation
 
