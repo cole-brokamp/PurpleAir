@@ -17,7 +17,7 @@ get_sensors_data(
 \item{x}{an input object used to define multiple sensors
 \itemize{
 \item st_bbox object will select sensors geographically (\code{nwlat}, \code{nwlon}, \code{selat}, \code{selon})
-\item integer vector will select sensors based on \code{sensor_index} (\code{show_only})
+\item integer (or numeric or character?) vector will select sensors based on \code{sensor_index} (\code{show_only})
 \item POSIXct object will select sensors modified since then (\code{modified_since})
 }}
 

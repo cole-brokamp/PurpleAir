@@ -4,7 +4,7 @@
 #' Find more details on sensor fields at https://api.purpleair.com/#api-sensors-get-sensors-data.
 #' @param x an input object used to define multiple sensors  
 #' - st_bbox object will select sensors geographically (`nwlat`, `nwlon`, `selat`, `selon`)
-#' - integer vector will select sensors based on `sensor_index` (`show_only`)
+#' - integer (or numeric or character?) vector will select sensors based on `sensor_index` (`show_only`)
 #' - POSIXct object will select sensors modified since then (`modified_since`)
 #' @param fields A character vector of which 'sensor data fields' to return
 #' @param location_type character; restrict to only "outside" or "inside" sensors (Outside: 0, Inside: 1)
