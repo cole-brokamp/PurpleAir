@@ -30,7 +30,7 @@ get_sensors_data <- function(x, fields, location_type = c("both", "inside", "out
   if (is.na(location_type)) location_type <- NULL
   resp <-
     purple_air_request(
-      show_only = paste(x, collapse = ","), # x is integer vector
+      show_only = x, # x is integer vector
       max_age = max_age,
       location_type = location_type,
       resource = "sensors",
