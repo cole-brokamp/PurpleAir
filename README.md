@@ -35,16 +35,16 @@ Get the latest data from a single PurpleAir sensor, defined by its
 ``` r
 get_sensor_data(sensor_index = 175413, fields = c("name", "last_seen", "pm2.5_cf_1", "pm2.5_atm"))
 #> $last_seen
-#> [1] 1720201543
+#> [1] "2024-07-05 13:51:43 EDT"
 #> 
 #> $name
 #> [1] "JN-Clifton,OH"
 #> 
 #> $pm2.5_atm
-#> [1] 4.7
+#> [1] 4.1
 #> 
 #> $pm2.5_cf_1
-#> [1] 4.7
+#> [1] 4.1
 ```
 
 Get the latest data from many PurpleAir sensors, defined by their sensor
@@ -55,8 +55,8 @@ get_sensors_data(x = as.integer(c(175257, 175413)), fields = c("name", "last_see
 #> # A tibble: 2 × 5
 #>   sensor_index last_seen           name          pm2.5_atm pm2.5_cf_1
 #>          <int> <dttm>              <chr>             <dbl>      <dbl>
-#> 1       175257 2024-07-05 13:46:00 Lillard             3.6        3.6
-#> 2       175413 2024-07-05 13:45:43 JN-Clifton,OH       4.7        4.7
+#> 1       175257 2024-07-05 13:52:00 Lillard             3.8        3.8
+#> 2       175413 2024-07-05 13:51:43 JN-Clifton,OH       4.1        4.1
 ```
 
 a geographic bounding box,

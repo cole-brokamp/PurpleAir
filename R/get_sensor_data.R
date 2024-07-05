@@ -22,5 +22,6 @@ get_sensor_data <- function(sensor_index, fields, purple_air_api_key = Sys.geten
       fields = fields
     )
   resp$sensor$sensor_index <- NULL
+  if ("last_seen" %in% names(resp$sensor)) resp$sensor$last_seen <- as.POSIXct.numeric(resp$sensor$last_seen)
   return(resp$sensor)
 }
