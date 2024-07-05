@@ -2,4 +2,5 @@
 
 export(check_api_key)
 export(get_sensor_data)
+export(get_sensor_history)
 export(get_sensors_data)

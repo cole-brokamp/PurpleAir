@@ -72,3 +72,32 @@ or a date from which sensors must have been modified since.
 ```{r}
 
 ```
+
+Get the latest data from several PurpleAir sensors:
+
+```{r}
+
+```
+
+Get historical data from a single PurpleAir sensor:
+
+```{r}
+my_history <-
+  get_sensor_history(
+    sensor_index = 175413,
+    fields = c("pm1.0_cf_1", "pm1.0_atm", "pm2.5_cf_1", "pm2.5_atm"),
+    start_timestamp = as.POSIXct("2024-07-02"),
+    end_timestamp = as.POSIXct("2024-07-05")
+  )
+
+my_history
+```
+
+and plot it:
+
+```{r}
+my_history |>
+  tidyr::pivot_longer(cols = tidyr::starts_with("pm"), names_to = "pollutant", values_to = "concentration") |>
+  ggplot2::ggplot(ggplot2::aes(time_stamp, concentration, color = pollutant)) +
+  ggplot2::geom_line()
+```
