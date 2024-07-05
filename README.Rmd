@@ -31,6 +31,8 @@ Install the development version of PurpleAir with:
 pak::pak("cole-brokamp/PurpleAir")
 ```
 
+Querying data from the PurpleAir API requires a free [PurpleAir Developer API key](https://develop.purpleair.com/sign-in?redirectURL=%2Fdashboards%2Fkeys) linked to a Google account.
+
 ## Usage
 
 ```{r}
