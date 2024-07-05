@@ -23,6 +23,11 @@ Install the development version of PurpleAir with:
 pak::pak("cole-brokamp/PurpleAir")
 ```
 
+Querying data from the PurpleAir API requires a free [PurpleAir
+Developer API
+key](https://develop.purpleair.com/sign-in?redirectURL=%2Fdashboards%2Fkeys)
+linked to a Google account.
+
 ## Usage
 
 ``` r
@@ -35,16 +40,16 @@ Get the latest data from a single PurpleAir sensor, defined by its
 ``` r
 get_sensor_data(sensor_index = 175413, fields = c("name", "last_seen", "pm2.5_cf_1", "pm2.5_atm"))
 #> $last_seen
-#> [1] "2024-07-05 13:51:43 EDT"
+#> [1] "2024-07-05 14:09:43 EDT"
 #> 
 #> $name
 #> [1] "JN-Clifton,OH"
 #> 
 #> $pm2.5_atm
-#> [1] 4.1
+#> [1] 4.2
 #> 
 #> $pm2.5_cf_1
-#> [1] 4.1
+#> [1] 4.2
 ```
 
 Get the latest data from many PurpleAir sensors, defined by their sensor
@@ -55,8 +60,8 @@ get_sensors_data(x = as.integer(c(175257, 175413)), fields = c("name", "last_see
 #> # A tibble: 2 × 5
 #>   sensor_index last_seen           name          pm2.5_atm pm2.5_cf_1
 #>          <int> <dttm>              <chr>             <dbl>      <dbl>
-#> 1       175257 2024-07-05 13:52:00 Lillard             3.8        3.8
-#> 2       175413 2024-07-05 13:51:43 JN-Clifton,OH       4.1        4.1
+#> 1       175257 2024-07-05 14:10:00 Lillard             3.7        3.7
+#> 2       175413 2024-07-05 14:09:43 JN-Clifton,OH       4.2        4.2
 ```
 
 a geographic bounding box,

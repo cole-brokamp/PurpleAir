@@ -7,7 +7,8 @@
 get_sensor_data(
   sensor_index,
   fields,
-  purple_air_api_key = Sys.getenv("PURPLE_AIR_API_KEY")
+  purple_air_api_key = Sys.getenv("PURPLE_AIR_API_KEY"),
+  read_key = NULL
 )
 }
 \arguments{
@@ -15,7 +16,7 @@ get_sensor_data(
 
 \item{fields}{A character vector of which 'sensor data fields' to return}
 
-\item{purple_air_key}{A character that is your PurpleAir API \code{READ} key}
+\item{purple_air_api_key}{A character that is your PurpleAir API \code{READ} key}
 
 \item{read_key}{A character key required to read data from private devices}
 }

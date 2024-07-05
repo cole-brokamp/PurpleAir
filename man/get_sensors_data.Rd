@@ -27,9 +27,9 @@ get_sensors_data(
 
 \item{max_age}{integer; filter results to only include sensors modified or updated within the last number of seconds}
 
-\item{read_keys}{TODO A character vector of keys required to read data from private devices}
+\item{purple_air_api_key}{Your PurpleAir API \code{READ} key}
 
-\item{purple_air_key}{Your PurpleAir API \code{READ} key}
+\item{read_keys}{TODO A character vector of keys required to read data from private devices}
 }
 \value{
 a list of sensor data, named by the provided \code{fields}
@@ -39,6 +39,8 @@ Retrieves the latest data of multiple sensors matching the provided parameters.
 Find more details on sensor fields at https://api.purpleair.com/#api-sensors-get-sensors-data.
 }
 \examples{
-get_sensors_data(x = as.integer(c(175257, 175413)), fields = c("name", "last_seen", "pm2.5_cf_1", "pm2.5_atm"))
-get_sensors_data(x = as.integer(c(175257, 175413)), fields = c("name", "pm2.5_cf_1", "pm2.5_atm"), location_type = "outside")
+get_sensors_data(x = as.integer(c(175257, 175413)),
+  fields = c("name", "last_seen", "pm2.5_cf_1", "pm2.5_atm"))
+get_sensors_data(x = as.integer(c(175257, 175413)),
+  fields = c("name", "pm2.5_cf_1", "pm2.5_atm"), location_type = "outside")
 }
