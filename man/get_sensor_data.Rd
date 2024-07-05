@@ -5,17 +5,17 @@
 \title{get sensor data}
 \usage{
 get_sensor_data(
-  purple_air_api_key = Sys.getenv("PURPLE_AIR_API_KEY"),
   sensor_index,
-  fields
+  fields,
+  purple_air_api_key = Sys.getenv("PURPLE_AIR_API_KEY")
 )
 }
 \arguments{
-\item{sensor_index}{The \code{sensor_index} as found in the JSON for this specific sensor}
+\item{sensor_index}{Integer (or numeric, character object coerceable to integer) \code{sensor_index}}
 
 \item{fields}{A character vector of which 'sensor data fields' to return}
 
-\item{purple_air_key}{Your PurpleAir API \code{READ} key}
+\item{purple_air_key}{A character that is your PurpleAir API \code{READ} key}
 
 \item{read_key}{A character key required to read data from private devices}
 }
@@ -27,5 +27,6 @@ Retrieves the latest data of a single sensor matching the provided \code{sensor_
 Find more details on sensor fields at https://api.purpleair.com/#api-sensors-get-sensor-data.
 }
 \examples{
-get_sensor_data(sensor_index = as.integer(175413), fields = c("name", "last_seen", "pm2.5_cf_1", "pm2.5_atm"))
+get_sensor_data(sensor_index = 175413, fields = c("name", "last_seen", "pm2.5_cf_1", "pm2.5_atm"))
+get_sensor_data(sensor_index = "175413", fields = c("name", "last_seen", "pm2.5_cf_1", "pm2.5_atm"))
 }
