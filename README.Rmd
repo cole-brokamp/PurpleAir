@@ -35,12 +35,16 @@ Install the development version of PurpleAir with:
 pak::pak("cole-brokamp/PurpleAir")
 ```
 
-Querying data from the PurpleAir API requires a free [PurpleAir Developer API key](https://develop.purpleair.com/sign-in?redirectURL=%2Fdashboards%2Fkeys) linked to a Google account.
-
 ## Usage
 
 ```{r}
 library(PurpleAir)
+```
+
+Querying data from the PurpleAir API requires a free [PurpleAir Developer API key](https://develop.purpleair.com/sign-in?redirectURL=%2Fdashboards%2Fkeys) linked to a Google account. Functions in the package each take a `purple_air_api_key` argument or your key can be stored in an environment variable called `PURPLE_AIR_API_KEY`).  To check your key, use:
+
+```{r}
+check_api_key(Sys.getenv("PURPLE_AIR_API_KEY"))
 ```
 
 Get the latest data from a single PurpleAir sensor, defined by its [sensor key](https://community.purpleair.com/t/sensor-index/4000):

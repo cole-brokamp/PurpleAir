@@ -38,15 +38,23 @@ Install the development version of PurpleAir with:
 pak::pak("cole-brokamp/PurpleAir")
 ```
 
-Querying data from the PurpleAir API requires a free [PurpleAir
-Developer API
-key](https://develop.purpleair.com/sign-in?redirectURL=%2Fdashboards%2Fkeys)
-linked to a Google account.
-
 ## Usage
 
 ``` r
 library(PurpleAir)
+```
+
+Querying data from the PurpleAir API requires a free [PurpleAir
+Developer API
+key](https://develop.purpleair.com/sign-in?redirectURL=%2Fdashboards%2Fkeys)
+linked to a Google account. Functions in the package each take a
+`purple_air_api_key` argument or your key can be stored in an
+environment variable called `PURPLE_AIR_API_KEY`). To check your key,
+use:
+
+``` r
+check_api_key(Sys.getenv("PURPLE_AIR_API_KEY"))
+#> ✔ Using valid 'READ' key with version V1.0.14-0.0.57 of the PurpleAir API on 2024-07-05 14:44:18
 ```
 
 Get the latest data from a single PurpleAir sensor, defined by its
@@ -56,7 +64,7 @@ Get the latest data from a single PurpleAir sensor, defined by its
 get_sensor_data(sensor_index = 175413,
                 fields = c("name", "last_seen", "pm2.5_cf_1", "pm2.5_atm"))
 #> $last_seen
-#> [1] "2024-07-05 14:37:43 EDT"
+#> [1] "2024-07-05 14:41:43 EDT"
 #> 
 #> $name
 #> [1] "JN-Clifton,OH"
@@ -77,8 +85,8 @@ get_sensors_data(x = as.integer(c(175257, 175413)),
 #> # A tibble: 2 × 5
 #>   sensor_index last_seen           name          pm2.5_atm pm2.5_cf_1
 #>          <int> <dttm>              <chr>             <dbl>      <dbl>
-#> 1       175257 2024-07-05 14:38:00 Lillard             4.4        4.4
-#> 2       175413 2024-07-05 14:39:43 JN-Clifton,OH       5          5
+#> 1       175257 2024-07-05 14:42:00 Lillard             3.9        3.9
+#> 2       175413 2024-07-05 14:41:43 JN-Clifton,OH       4.6        4.6
 ```
 
 a geographic bounding box,
