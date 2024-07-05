@@ -48,6 +48,6 @@ get_sensors_data <- function(x, fields, location_type = c("both", "inside", "out
 
 
 
-#' @param show_only An integer vector of `sensor_index` sensors identifiers to return
-#' @param modified_since A POSIXct time object.
-#' Only sensors modified after this time are included in the results; no effect if `show_only` is specified
+## #' @param show_only An integer vector of `sensor_index` sensors identifiers to return
+## #' @param modified_since A POSIXct time object.
+## #' Only sensors modified after this time are included in the results; no effect if `show_only` is specified
