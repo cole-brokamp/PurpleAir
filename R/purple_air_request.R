@@ -13,7 +13,8 @@ purple_air_request <- function(purple_air_api_key = Sys.getenv("PURPLE_AIR_API_K
       is_error = \(resp) httr2::resp_status(resp) != success_code,
       body = \(resp) glue::glue_data(httr2::resp_body_json(resp), "{error}: {description} (API version: {api_version})")
     ) |>
-    httr2::req_url_query(!!!list(...), .multi = "comma")
+    httr2::req_url_query(!!!list(...), .multi = "comma") |>
+    httr2::req_throttle(30 / 60)
   if (resource == "keys") req <- httr2::req_url_path_append(req, "keys")
   if (resource == "organization") req <- httr2::req_url_path_append(req, "organization")
   if (resource == "sensors") {

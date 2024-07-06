@@ -82,11 +82,6 @@ Get the latest data from several PurpleAir sensors:
 Get historical data from a single PurpleAir sensor:
 
 ```{r}
-#| echo: false
-Sys.sleep(20)
-```
-
-```{r}
 my_history <-
   get_sensor_history(
     sensor_index = 175413,
@@ -100,7 +95,7 @@ my_history
 
 and plot it:
 
-```{r}
+```{r "example_sensor_history_plot"}
 my_history |>
   tidyr::pivot_longer(cols = tidyr::starts_with("pm"), names_to = "pollutant", values_to = "concentration") |>
   ggplot2::ggplot(ggplot2::aes(time_stamp, concentration, color = pollutant)) +
