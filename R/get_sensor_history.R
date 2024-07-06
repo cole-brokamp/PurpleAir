@@ -22,7 +22,9 @@ get_sensor_history <- function(sensor_index,
                                fields,
                                start_timestamp,
                                end_timestamp,
-                               average = c("10min", "30min", "60min", "6hr", "1day", "1week", "1month", "1year", "real-time"),
+                               average = c("10min", "30min", "60min",
+                                           "6hr", "1day", "1week",
+                                           "1month", "1year", "real-time"),
                                purple_air_api_key = Sys.getenv("PURPLE_AIR_API_KEY"),
                                read_key = NULL) {
   if (!rlang::is_integer(as.integer(sensor_index))) cli::cli_abort("sensor_index must be an integer")
@@ -35,7 +37,7 @@ get_sensor_history <- function(sensor_index,
     )[avg]
   )
   resp <-
-    purple_air_request(
+    PurpleAir:::purple_air_request(
       resource = "sensor_history",
       success_code = as.integer(200),
       sensor_index = as.integer(sensor_index),
@@ -44,7 +46,9 @@ get_sensor_history <- function(sensor_index,
       average = avg_int,
       fields = fields,
       read_key = read_key
-    )
+    ) |>
+    httr2::req_perform() |>
+    httr2::resp_body_json()
   out <-
     purrr::map(resp$data, stats::setNames, resp$fields) |>
     purrr::modify(as.data.frame) |>
@@ -52,5 +56,5 @@ get_sensor_history <- function(sensor_index,
     tibble::as_tibble()
   out$time_stamp <- as.POSIXct.numeric(out$time_stamp)
   return(out)
-  md <- purrr::discard_at(resp, c("fields", "data"))
+  ## md <- purrr::discard_at(resp, c("fields", "data"))
 }

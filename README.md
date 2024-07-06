@@ -54,7 +54,7 @@ use:
 
 ``` r
 check_api_key(Sys.getenv("PURPLE_AIR_API_KEY"))
-#> ✔ Using valid 'READ' key with version V1.0.14-0.0.57 of the PurpleAir API on 2024-07-05 14:44:18
+#> ✔ Using valid 'READ' key with version V1.0.14-0.0.57 of the PurpleAir API on 2024-07-06 00:06:47
 ```
 
 Get the latest data from a single PurpleAir sensor, defined by its
@@ -64,16 +64,16 @@ Get the latest data from a single PurpleAir sensor, defined by its
 get_sensor_data(sensor_index = 175413,
                 fields = c("name", "last_seen", "pm2.5_cf_1", "pm2.5_atm"))
 #> $last_seen
-#> [1] "2024-07-05 14:41:43 EDT"
+#> [1] "2024-07-06 00:05:48 EDT"
 #> 
 #> $name
 #> [1] "JN-Clifton,OH"
 #> 
 #> $pm2.5_atm
-#> [1] 4.6
+#> [1] 23.5
 #> 
 #> $pm2.5_cf_1
-#> [1] 4.6
+#> [1] 23.5
 ```
 
 Get the latest data from many PurpleAir sensors, defined by their sensor
@@ -85,10 +85,51 @@ get_sensors_data(x = as.integer(c(175257, 175413)),
 #> # A tibble: 2 × 5
 #>   sensor_index last_seen           name          pm2.5_atm pm2.5_cf_1
 #>          <int> <dttm>              <chr>             <dbl>      <dbl>
-#> 1       175257 2024-07-05 14:42:00 Lillard             3.9        3.9
-#> 2       175413 2024-07-05 14:41:43 JN-Clifton,OH       4.6        4.6
+#> 1       175257 2024-07-06 00:06:06 Lillard            29.5       30.2
+#> 2       175413 2024-07-06 00:05:48 JN-Clifton,OH      23.5       23.5
 ```
 
 a geographic bounding box,
 
 or a date from which sensors must have been modified since.
+
+Get the latest data from several PurpleAir sensors:
+
+Get historical data from a single PurpleAir sensor:
+
+``` r
+my_history <-
+  get_sensor_history(
+    sensor_index = 175413,
+    fields = c("pm1.0_cf_1", "pm1.0_atm", "pm2.5_cf_1", "pm2.5_atm"),
+    start_timestamp = as.POSIXct("2024-07-02"),
+    end_timestamp = as.POSIXct("2024-07-05")
+  )
+
+my_history
+#> # A tibble: 432 × 5
+#>    time_stamp          pm1.0_cf_1 pm1.0_atm pm2.5_atm pm2.5_cf_1
+#>    <dttm>                   <dbl>     <dbl>     <dbl>      <dbl>
+#>  1 2024-07-04 22:00:00     2512.     1678.     1682.      2516. 
+#>  2 2024-07-04 21:20:00     2505.     1671.     1672.      2506. 
+#>  3 2024-07-04 20:30:00       16.5      14.2      16.5       18.9
+#>  4 2024-07-04 21:40:00     2509.     1675.     1679.      2512. 
+#>  5 2024-07-04 22:30:00     2522.     1683.     1689.      2530. 
+#>  6 2024-07-04 21:10:00     2505.     1671.     1672.      2506. 
+#>  7 2024-07-04 20:40:00       31.9      25.3      27.9       34.6
+#>  8 2024-07-04 23:30:00     2510.     1676.     1680.      2513. 
+#>  9 2024-07-04 23:50:00     2509.     1675.     1678.      2512. 
+#> 10 2024-07-04 23:20:00     2514.     1679.     1683.      2518. 
+#> # ℹ 422 more rows
+```
+
+and plot it:
+
+``` r
+my_history |>
+  tidyr::pivot_longer(cols = tidyr::starts_with("pm"), names_to = "pollutant", values_to = "concentration") |>
+  ggplot2::ggplot(ggplot2::aes(time_stamp, concentration, color = pollutant)) +
+  ggplot2::geom_line()
+```
+
+<img src="man/figures/README-unnamed-chunk-11-1.png" width="100%" />

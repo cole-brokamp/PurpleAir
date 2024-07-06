@@ -82,6 +82,11 @@ Get the latest data from several PurpleAir sensors:
 Get historical data from a single PurpleAir sensor:
 
 ```{r}
+#| echo: false
+Sys.sleep(3)
+```
+
+```{r}
 my_history <-
   get_sensor_history(
     sensor_index = 175413,
