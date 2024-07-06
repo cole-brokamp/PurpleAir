@@ -37,7 +37,7 @@ get_sensor_history <- function(sensor_index,
     )[avg]
   )
   resp <-
-    PurpleAir:::purple_air_request(
+    purple_air_request(
       resource = "sensor_history",
       success_code = as.integer(200),
       sensor_index = as.integer(sensor_index),
