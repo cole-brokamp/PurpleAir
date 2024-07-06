@@ -37,7 +37,9 @@ get_sensors_data <- function(x, fields, location_type = c("both", "inside", "out
       success_code = as.integer(200),
       fields = fields,
       read_keys = read_keys
-    )
+    ) |>
+    httr2::req_perform() |>
+    httr2::resp_body_json()
   out <-
     purrr::map(resp$data, stats::setNames, resp$fields) |>
     purrr::modify(as.data.frame) |>

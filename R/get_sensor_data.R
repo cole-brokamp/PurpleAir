@@ -21,8 +21,10 @@ get_sensor_data <- function(sensor_index, fields, purple_air_api_key = Sys.geten
       sensor_index = as.integer(sensor_index),
       fields = fields,
       read_key = read_key
-    )
-  resp$sensor$sensor_index <- NULL
-  if ("last_seen" %in% names(resp$sensor)) resp$sensor$last_seen <- as.POSIXct.numeric(resp$sensor$last_seen)
-  return(resp$sensor)
+    ) |>
+    httr2::req_perform()
+  out <- httr2::resp_body_json(resp)$sensor
+  out$sensor_index <- NULL
+  if ("last_seen" %in% names(out)) out$last_seen <- as.POSIXct.numeric(out$last_seen)
+  return(out)
 }
