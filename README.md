@@ -54,7 +54,7 @@ use:
 
 ``` r
 check_api_key(Sys.getenv("PURPLE_AIR_API_KEY"))
-#> ✔ Using valid 'READ' key with version V1.0.14-0.0.57 of the PurpleAir API on 2024-07-06 13:18:52
+#> ✔ Using valid 'READ' key with version V1.0.14-0.0.57 of the PurpleAir API on 2024-07-07 19:17:31
 ```
 
 Get the latest data from a single PurpleAir sensor, defined by its
@@ -63,19 +63,17 @@ Get the latest data from a single PurpleAir sensor, defined by its
 ``` r
 get_sensor_data(sensor_index = 175413,
                 fields = c("name", "last_seen", "pm2.5_cf_1", "pm2.5_atm"))
-#> Waiting 2s for throttling delay ■■■■■■■■■■■■■■■
-#> Waiting 2s for throttling delay ■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■
 #> $last_seen
-#> [1] "2024-07-06 13:17:54 EDT"
+#> [1] "2024-07-07 19:16:12 EDT"
 #> 
 #> $name
 #> [1] "JN-Clifton,OH"
 #> 
 #> $pm2.5_atm
-#> [1] 1.6
+#> [1] 19.1
 #> 
 #> $pm2.5_cf_1
-#> [1] 1.6
+#> [1] 19.1
 ```
 
 Get the latest data from many PurpleAir sensors, defined by their sensor
@@ -84,20 +82,55 @@ keys,
 ``` r
 get_sensors_data(x = as.integer(c(175257, 175413)),
                  fields = c("name", "last_seen", "pm2.5_cf_1", "pm2.5_atm"))
-#> Waiting 2s for throttling delay ■■■■■■■■■■■■■■■
-#> Waiting 2s for throttling delay ■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■
 #> # A tibble: 2 × 5
 #>   sensor_index last_seen           name          pm2.5_atm pm2.5_cf_1
 #>          <int> <dttm>              <chr>             <dbl>      <dbl>
-#> 1       175257 2024-07-06 13:16:13 Lillard             1.2        1.2
-#> 2       175413 2024-07-06 13:17:54 JN-Clifton,OH       1.6        1.6
+#> 1       175257 2024-07-07 19:16:30 Lillard            10.1       10.1
+#> 2       175413 2024-07-07 19:16:12 JN-Clifton,OH      19.1       19.1
 ```
 
 a geographic bounding box,
 
+``` r
+cincy::tract_tigris_2020 |>
+  sf::st_transform(4326) |>
+  sf::st_bbox() |>
+  get_sensors_data(fields = c("name"))
+#> # A tibble: 45 × 2
+#>    sensor_index name              
+#>           <int> <chr>             
+#>  1        30303 아가페_실내       
+#>  2        30561 lineblock_outside2
+#>  3        30571 amlok_inside      
+#>  4        36325 807d3a616167      
+#>  5        36681 68c63a8e59a       
+#>  6        42623 KMI_041           
+#>  7        49191 BCDDC264D0B1      
+#>  8        49193 ECFABCB88583      
+#>  9        49199 ECFABC59A4F4      
+#> 10        49213 807D3A615D1E      
+#> # ℹ 35 more rows
+```
+
 or a date from which sensors must have been modified since.
 
-Get the latest data from several PurpleAir sensors:
+``` r
+get_sensors_data(as.POSIXct(Sys.time()) - 60, fields = "name")
+#> # A tibble: 8,870 × 2
+#>    sensor_index name                               
+#>           <int> <chr>                              
+#>  1          334 "Moody Ave"                        
+#>  2          387 "Monmouth Drive P1"                
+#>  3          443 "Weber-Morgan Health Department P1"
+#>  4          453 "LRAPA-Oakridge City Hall"         
+#>  5          469 "Sunnyside (interieur)"            
+#>  6          473 "Sunnyside 93727"                  
+#>  7          547 "AQMD_RTI_1"                       
+#>  8          749 "Agia"                             
+#>  9          820 "Granite Basement"                 
+#> 10          828 "Acacia Street N Parksville,BC "   
+#> # ℹ 8,860 more rows
+```
 
 Get historical data from a single PurpleAir sensor:
 
@@ -114,16 +147,16 @@ my_history
 #> # A tibble: 432 × 5
 #>    time_stamp          pm1.0_cf_1 pm1.0_atm pm2.5_atm pm2.5_cf_1
 #>    <dttm>                   <dbl>     <dbl>     <dbl>      <dbl>
-#>  1 2024-07-04 22:00:00     2512.     1678.     1682.      2516. 
-#>  2 2024-07-04 21:20:00     2505.     1671.     1672.      2506. 
-#>  3 2024-07-04 20:30:00       16.5      14.2      16.5       18.9
-#>  4 2024-07-04 21:40:00     2509.     1675.     1679.      2512. 
-#>  5 2024-07-04 22:30:00     2522.     1683.     1689.      2530. 
-#>  6 2024-07-04 21:10:00     2505.     1671.     1672.      2506. 
-#>  7 2024-07-04 20:40:00       31.9      25.3      27.9       34.6
-#>  8 2024-07-04 23:30:00     2510.     1676.     1680.      2513. 
-#>  9 2024-07-04 23:50:00     2509.     1675.     1678.      2512. 
-#> 10 2024-07-04 23:20:00     2514.     1679.     1683.      2518. 
+#>  1 2024-07-03 23:40:00    2503.     1670.      1671.      2505. 
+#>  2 2024-07-04 06:50:00    2504.     1670.      1671.      2505. 
+#>  3 2024-07-03 22:10:00    2505.     1672.      1673.      2507. 
+#>  4 2024-07-04 07:10:00    2503.     1670.      1671.      2504. 
+#>  5 2024-07-04 09:40:00    2504.     1671.      1672.      2505. 
+#>  6 2024-07-04 11:30:00    2504.     1671.      1673.      2506. 
+#>  7 2024-07-04 03:40:00    2501.     1668.      1669.      2502. 
+#>  8 2024-07-03 22:20:00    2504.     1671.      1673.      2506. 
+#>  9 2024-07-04 03:00:00    2502.     1669.      1669.      2503. 
+#> 10 2024-07-04 18:50:00       8.32      8.32      10.1       10.1
 #> # ℹ 422 more rows
 ```
 
@@ -137,3 +170,11 @@ my_history |>
 ```
 
 <img src="man/figures/README-example_sensor_history_plot-1.png" width="100%" />
+
+By default, the PurpleAir R package retries failed API requests related
+to an underlying HTTP error (e.g., network is down) or a transient API
+error (i.e., 429, 503). Before retrying each failed request, it waits
+about 2 seconds. Successive failed requests result in exponentially
+longer waiting times (`httr2::req_retry()`). Specify the maximum number
+of seconds to wait (by default 45) with the environment variable
+`PURPLE_AIR_API_RETRY_MAX_TIME`.
