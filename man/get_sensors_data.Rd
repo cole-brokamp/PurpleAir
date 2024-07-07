@@ -14,11 +14,11 @@ get_sensors_data(
 )
 }
 \arguments{
-\item{x}{an input object used to define multiple sensors
+\item{x}{an input object used to define multiple sensors:
 \itemize{
-\item st_bbox object will select sensors geographically (\code{nwlat}, \code{nwlon}, \code{selat}, \code{selon})
-\item integer (or numeric or character?) vector will select sensors based on \code{sensor_index} (\code{show_only})
-\item POSIXct object will select sensors modified since then (\code{modified_since})
+\item integer (or numeric or character) vector will select sensors based on \code{sensor_index} (API: \code{show_only})
+\item st_bbox object will select sensors geographically (API: \code{nwlat}, \code{nwlon}, \code{selat}, \code{selon})
+\item POSIXct object will select sensors modified since then (API: \code{modified_since})
 }}
 
 \item{fields}{A character vector of which 'sensor data fields' to return}
@@ -39,8 +39,24 @@ Retrieves the latest data of multiple sensors matching the provided parameters.
 Find more details on sensor fields at https://api.purpleair.com/#api-sensors-get-sensors-data.
 }
 \examples{
-get_sensors_data(x = as.integer(c(175257, 175413)),
-  fields = c("name", "last_seen", "pm2.5_cf_1", "pm2.5_atm"))
-get_sensors_data(x = as.integer(c(175257, 175413)),
-  fields = c("name", "pm2.5_cf_1", "pm2.5_atm"), location_type = "outside")
+# get sensors data by integer, numeric, or character vector of `sensor_index`
+get_sensors_data(
+  x = as.integer(c(175257, 175413)),
+  fields = c("name", "last_seen", "pm2.5_cf_1", "pm2.5_atm")
+)
+get_sensors_data(
+  x = c(175257, 175413),
+  fields = c("name", "last_seen", "pm2.5_cf_1", "pm2.5_atm")
+)
+get_sensors_data(
+  x = c("175257", "175413"),
+  fields = c("name"), location_type = "outside"
+)
+# get sensors by bounding box around Hamilton County, OH
+sf::st_bbox(c("xmin" = -84.82030, "ymin" = 39.02153,
+              "xmax" = -84.25633, "ymax" = 39.31206),
+            crs = 4326) |>
+  get_sensors_data(fields = c("name"))
+# sensors modified in the last 60 seconds
+get_sensors_data(as.POSIXct(Sys.time()) - 60, fields = "name")
 }
