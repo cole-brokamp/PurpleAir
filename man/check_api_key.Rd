@@ -21,8 +21,10 @@ Storing your key in the environment variable \code{PURPLE_AIR_API_KEY} is safer 
 in source code and is used by default in each PurpleAir function.
 }
 \examples{
+\dontrun{
 check_api_key()
 try(check_api_key("foofy"))
+}
 }
 \seealso{
 get_organization_data

@@ -15,6 +15,7 @@
 #' @export
 #' @seealso get_sensor_data
 #' @examples
+#' \dontrun{
 #' # get sensors data by integer, numeric, or character vector of `sensor_index`
 #' get_sensors_data(
 #'   x = as.integer(c(175257, 175413)),
@@ -35,6 +36,7 @@
 #'   get_sensors_data(fields = c("name"))
 #' # sensors modified in the last 60 seconds
 #' get_sensors_data(as.POSIXct(Sys.time()) - 60, fields = "name")
+#' }
 get_sensors_data <- function(x,
                              fields,
                              location_type = c("both", "inside", "outside"),

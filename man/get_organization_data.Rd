@@ -17,7 +17,9 @@ Use the PurpleAir API to retrieve information for the organization containing th
 Find more details on this function at https://api.purpleair.com/#api-organization-get-organization-data
 }
 \examples{
+\dontrun{
 get_organization_data()
+}
 }
 \seealso{
 check_api_key

@@ -39,6 +39,7 @@ Retrieves the latest data of multiple sensors matching the provided parameters.
 Find more details on sensor fields at https://api.purpleair.com/#api-sensors-get-sensors-data.
 }
 \examples{
+\dontrun{
 # get sensors data by integer, numeric, or character vector of `sensor_index`
 get_sensors_data(
   x = as.integer(c(175257, 175413)),
@@ -59,6 +60,7 @@ sf::st_bbox(c("xmin" = -84.82030, "ymin" = 39.02153,
   get_sensors_data(fields = c("name"))
 # sensors modified in the last 60 seconds
 get_sensors_data(as.POSIXct(Sys.time()) - 60, fields = "name")
+}
 }
 \seealso{
 get_sensor_data

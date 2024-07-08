@@ -7,7 +7,9 @@
 #' @export
 #' @seealso check_api_key
 #' @examples
+#' \dontrun{
 #' get_organization_data()
+#' }
 get_organization_data <- function(purple_air_api_key = Sys.getenv("PURPLE_AIR_API_KEY")) {
   resp <-
     purple_air_request(

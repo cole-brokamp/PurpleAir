@@ -10,8 +10,10 @@
 #' @export
 #' @seealso get_sensors_data get_sensor_history
 #' @examples
+#' \dontrun{
 #' get_sensor_data(sensor_index = 175413, fields = c("name", "last_seen", "pm2.5_cf_1", "pm2.5_atm"))
 #' get_sensor_data(sensor_index = "175413", fields = c("name", "last_seen", "pm2.5_cf_1", "pm2.5_atm"))
+#' }
 get_sensor_data <- function(sensor_index,
                             fields,
                             purple_air_api_key = Sys.getenv("PURPLE_AIR_API_KEY"),

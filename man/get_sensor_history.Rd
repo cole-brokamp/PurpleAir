@@ -38,10 +38,12 @@ Retrieves the latest history of a single sensor matching the provided \code{sens
 Find more details on sensor fields at https://api.purpleair.com/#api-sensors-get-sensor-history.
 }
 \examples{
+\dontrun{
 get_sensor_history(
   sensor_index = 175413,
   fields = c("pm1.0_cf_1", "pm1.0_atm", "pm2.5_cf_1", "pm2.5_atm"),
   start_timestamp = as.POSIXct("2024-07-02"),
   end_timestamp = as.POSIXct("2024-07-05")
 )
+}
 }

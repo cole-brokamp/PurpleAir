@@ -28,8 +28,10 @@ Retrieves the latest data of a single sensor matching the provided \code{sensor_
 Find more details on sensor fields at https://api.purpleair.com/#api-sensors-get-sensor-data.
 }
 \examples{
+\dontrun{
 get_sensor_data(sensor_index = 175413, fields = c("name", "last_seen", "pm2.5_cf_1", "pm2.5_atm"))
 get_sensor_data(sensor_index = "175413", fields = c("name", "last_seen", "pm2.5_cf_1", "pm2.5_atm"))
+}
 }
 \seealso{
 get_sensors_data get_sensor_history
