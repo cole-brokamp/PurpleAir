@@ -1,18 +1,19 @@
-#' get sensors data
+#' Get Sensors Data
 #'
 #' Retrieves the latest data of multiple sensors matching the provided parameters.
 #' Find more details on sensor fields at https://api.purpleair.com/#api-sensors-get-sensors-data.
 #' @param x an input object used to define multiple sensors:
-#' - integer (or numeric or character) vector will select sensors based on `sensor_index` (API: `show_only`)
-#' - st_bbox object will select sensors geographically (API: `nwlat`, `nwlon`, `selat`, `selon`)
-#' - POSIXct object will select sensors modified since then (API: `modified_since`)
+#' - an integer (or numeric or character) vector will select sensors based on `sensor_index` (API: `show_only`)
+#' - a st_bbox object will select sensors geographically (API: `nwlat`, `nwlon`, `selat`, `selon`)
+#' - a POSIXct object will select sensors modified since the given time (API: `modified_since`)
 #' @param fields A character vector of which 'sensor data fields' to return
 #' @param location_type character; restrict to only "outside" or "inside" sensors (Outside: 0, Inside: 1)
 #' @param max_age integer; filter results to only include sensors modified or updated within the last number of seconds
 #' @param purple_air_api_key Your PurpleAir API `READ` key
-#' @param read_keys TODO A character vector of keys required to read data from private devices
-#' @returns a list of sensor data, named by the provided `fields`
+#' @param read_keys A character vector of keys required to read data from private devices
+#' @returns A list of sensor data, named by the provided `fields`
 #' @export
+#' @seealso get_sensor_data
 #' @examples
 #' # get sensors data by integer, numeric, or character vector of `sensor_index`
 #' get_sensors_data(
@@ -34,8 +35,12 @@
 #'   get_sensors_data(fields = c("name"))
 #' # sensors modified in the last 60 seconds
 #' get_sensors_data(as.POSIXct(Sys.time()) - 60, fields = "name")
-get_sensors_data <- function(x, fields, location_type = c("both", "inside", "outside"), max_age = as.integer(604800), purple_air_api_key = Sys.getenv("PURPLE_AIR_API_KEY"), read_keys = NULL) {
-  # TODO support multiple read keys
+get_sensors_data <- function(x,
+                             fields,
+                             location_type = c("both", "inside", "outside"),
+                             max_age = as.integer(604800),
+                             purple_air_api_key = Sys.getenv("PURPLE_AIR_API_KEY"),
+                             read_keys = NULL) {
   if (!rlang::is_character(fields)) cli::cli_abort("fields must be a character")
   if (!rlang::is_integer(max_age)) cli::cli_abort("max_age must be an integer")
   location_type <- rlang::arg_match(location_type)
@@ -98,7 +103,5 @@ get_sensors_data <- function(x, fields, location_type = c("both", "inside", "out
     purrr::list_rbind() |>
     tibble::as_tibble()
   if ("last_seen" %in% resp$fields) out$last_seen <- as.POSIXct.numeric(out$last_seen)
-  # TODO return metadata how?
-  md <- purrr::discard_at(resp, c("fields", "data"))
   return(out)
 }

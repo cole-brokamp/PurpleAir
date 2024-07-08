@@ -1,4 +1,4 @@
-#' get sensor data
+#' Get Sensor Data
 #'
 #' Retrieves the latest data of a single sensor matching the provided `sensor_index`.
 #' Find more details on sensor fields at https://api.purpleair.com/#api-sensors-get-sensor-data.
@@ -6,12 +6,16 @@
 #' @param fields A character vector of which 'sensor data fields' to return
 #' @param purple_air_api_key A character that is your PurpleAir API `READ` key
 #' @param read_key A character key required to read data from private devices
-#' @returns a list of sensor data, named by the provided `fields`
+#' @returns A list of sensor data, named by the provided `fields`
 #' @export
+#' @seealso get_sensors_data get_sensor_history
 #' @examples
 #' get_sensor_data(sensor_index = 175413, fields = c("name", "last_seen", "pm2.5_cf_1", "pm2.5_atm"))
 #' get_sensor_data(sensor_index = "175413", fields = c("name", "last_seen", "pm2.5_cf_1", "pm2.5_atm"))
-get_sensor_data <- function(sensor_index, fields, purple_air_api_key = Sys.getenv("PURPLE_AIR_API_KEY"), read_key = NULL) {
+get_sensor_data <- function(sensor_index,
+                            fields,
+                            purple_air_api_key = Sys.getenv("PURPLE_AIR_API_KEY"),
+                            read_key = NULL) {
   if (!rlang::is_integer(as.integer(sensor_index))) cli::cli_abort("sensor_index must be an integer")
   if (!rlang::is_character(fields)) cli::cli_abort("fields must be a character")
   resp <-

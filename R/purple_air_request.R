@@ -26,5 +26,3 @@ purple_air_request <- function(purple_air_api_key = Sys.getenv("PURPLE_AIR_API_K
   if (resource == "sensor_history") req <- httr2::req_url_path_append(req, "sensors", sensor_index, "history")
   return(req)
 }
-
-# https://api.purpleair.com/#api-sensors-get-sensor-data

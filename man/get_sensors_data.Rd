@@ -2,7 +2,7 @@
 % Please edit documentation in R/get_sensors_data.R
 \name{get_sensors_data}
 \alias{get_sensors_data}
-\title{get sensors data}
+\title{Get Sensors Data}
 \usage{
 get_sensors_data(
   x,
@@ -16,9 +16,9 @@ get_sensors_data(
 \arguments{
 \item{x}{an input object used to define multiple sensors:
 \itemize{
-\item integer (or numeric or character) vector will select sensors based on \code{sensor_index} (API: \code{show_only})
-\item st_bbox object will select sensors geographically (API: \code{nwlat}, \code{nwlon}, \code{selat}, \code{selon})
-\item POSIXct object will select sensors modified since then (API: \code{modified_since})
+\item an integer (or numeric or character) vector will select sensors based on \code{sensor_index} (API: \code{show_only})
+\item a st_bbox object will select sensors geographically (API: \code{nwlat}, \code{nwlon}, \code{selat}, \code{selon})
+\item a POSIXct object will select sensors modified since the given time (API: \code{modified_since})
 }}
 
 \item{fields}{A character vector of which 'sensor data fields' to return}
@@ -29,10 +29,10 @@ get_sensors_data(
 
 \item{purple_air_api_key}{Your PurpleAir API \code{READ} key}
 
-\item{read_keys}{TODO A character vector of keys required to read data from private devices}
+\item{read_keys}{A character vector of keys required to read data from private devices}
 }
 \value{
-a list of sensor data, named by the provided \code{fields}
+A list of sensor data, named by the provided \code{fields}
 }
 \description{
 Retrieves the latest data of multiple sensors matching the provided parameters.
@@ -59,4 +59,7 @@ sf::st_bbox(c("xmin" = -84.82030, "ymin" = 39.02153,
   get_sensors_data(fields = c("name"))
 # sensors modified in the last 60 seconds
 get_sensors_data(as.POSIXct(Sys.time()) - 60, fields = "name")
+}
+\seealso{
+get_sensor_data
 }

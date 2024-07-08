@@ -16,7 +16,7 @@ knitr::opts_chunk$set(
 # PurpleAir
 
 <!-- badges: start -->
-[![Lifecycle: experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://lifecycle.r-lib.org/articles/stages.html#experimental)
+[![Lifecycle: stable](https://img.shields.io/badge/lifecycle-stable-brightgreen.svg)](https://lifecycle.r-lib.org/articles/stages.html#stable)
 [![CRAN status](https://www.r-pkg.org/badges/version/PurpleAir)](https://CRAN.R-project.org/package=PurpleAir)
 [![R-CMD-check](https://github.com/cole-brokamp/PurpleAir/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/cole-brokamp/PurpleAir/actions/workflows/R-CMD-check.yaml)
 <!-- badges: end -->
@@ -41,7 +41,7 @@ pak::pak("cole-brokamp/PurpleAir")
 library(PurpleAir)
 ```
 
-Querying data from the PurpleAir API requires a free [PurpleAir Developer API key](https://develop.purpleair.com/sign-in?redirectURL=%2Fdashboards%2Fkeys) linked to a Google account. Functions in the package each take a `purple_air_api_key` argument or your key can be stored in an environment variable called `PURPLE_AIR_API_KEY`).  To check your key, use:
+Querying data from the PurpleAir API requires a free [PurpleAir Developer API key](https://develop.purpleair.com/sign-in?redirectURL=%2Fdashboards%2Fkeys) linked to a Google account. Functions in the package each take a `purple_air_api_key` argument or your key can be stored in an environment variable called `PURPLE_AIR_API_KEY`.  To check your key, use:
 
 ```{r}
 check_api_key(Sys.getenv("PURPLE_AIR_API_KEY"))
@@ -61,7 +61,7 @@ get_sensors_data(x = as.integer(c(175257, 175413)),
                  fields = c("name", "last_seen", "pm2.5_cf_1", "pm2.5_atm"))
 ```
 
-a geographic bounding box,
+a geographic [bounding box](http://bboxfinder.com),
 
 ```{r}
 sf::st_bbox(

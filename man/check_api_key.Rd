@@ -2,7 +2,7 @@
 % Please edit documentation in R/check_api_key.R
 \name{check_api_key}
 \alias{check_api_key}
-\title{check purple air api key}
+\title{Check Purple Air API Key}
 \usage{
 check_api_key(purple_air_api_key = Sys.getenv("PURPLE_AIR_API_KEY"))
 }
@@ -10,15 +10,20 @@ check_api_key(purple_air_api_key = Sys.getenv("PURPLE_AIR_API_KEY"))
 \item{purple_air_api_key}{A character that is your PurpleAir API \code{READ} key}
 }
 \value{
-if the key is valid, a message is emitted and the input is invisibly returned;
+If the key is valid, a message is emitted and the input is invisibly returned;
 invalid keys will throw an R error which utilizes information from the underlying http error
-to inform the user
+to inform the user.
 }
 \description{
 Use the PurpleAir API to validate your Purple Air API Key.
-Find more details on this function at https://api.purpleair.com/#api-keys-check-api-key
+Find more details on this function at https://api.purpleair.com/#api-keys-check-api-key.
+Storing your key in the environment variable \code{PURPLE_AIR_API_KEY} is safer than storing it
+in source code and is used by default in each PurpleAir function.
 }
 \examples{
 check_api_key()
 try(check_api_key("foofy"))
+}
+\seealso{
+get_organization_data
 }

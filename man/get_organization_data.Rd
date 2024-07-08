@@ -2,7 +2,7 @@
 % Please edit documentation in R/get_organization_data.R
 \name{get_organization_data}
 \alias{get_organization_data}
-\title{get organization data}
+\title{Get Organization Data}
 \usage{
 get_organization_data(purple_air_api_key = Sys.getenv("PURPLE_AIR_API_KEY"))
 }
@@ -10,7 +10,7 @@ get_organization_data(purple_air_api_key = Sys.getenv("PURPLE_AIR_API_KEY"))
 \item{purple_air_api_key}{A character that is your PurpleAir API \code{READ} key}
 }
 \value{
-a list of organization info
+A list of organization info
 }
 \description{
 Use the PurpleAir API to retrieve information for the organization containing the provided api_key
@@ -18,4 +18,7 @@ Find more details on this function at https://api.purpleair.com/#api-organizatio
 }
 \examples{
 get_organization_data()
+}
+\seealso{
+check_api_key
 }

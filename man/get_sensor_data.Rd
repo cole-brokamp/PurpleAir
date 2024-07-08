@@ -2,7 +2,7 @@
 % Please edit documentation in R/get_sensor_data.R
 \name{get_sensor_data}
 \alias{get_sensor_data}
-\title{get sensor data}
+\title{Get Sensor Data}
 \usage{
 get_sensor_data(
   sensor_index,
@@ -21,7 +21,7 @@ get_sensor_data(
 \item{read_key}{A character key required to read data from private devices}
 }
 \value{
-a list of sensor data, named by the provided \code{fields}
+A list of sensor data, named by the provided \code{fields}
 }
 \description{
 Retrieves the latest data of a single sensor matching the provided \code{sensor_index}.
@@ -30,4 +30,7 @@ Find more details on sensor fields at https://api.purpleair.com/#api-sensors-get
 \examples{
 get_sensor_data(sensor_index = 175413, fields = c("name", "last_seen", "pm2.5_cf_1", "pm2.5_atm"))
 get_sensor_data(sensor_index = "175413", fields = c("name", "last_seen", "pm2.5_cf_1", "pm2.5_atm"))
+}
+\seealso{
+get_sensors_data get_sensor_history
 }
