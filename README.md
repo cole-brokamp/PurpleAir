@@ -6,7 +6,7 @@
 <!-- badges: start -->
 
 [![Lifecycle:
-experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://lifecycle.r-lib.org/articles/stages.html#experimental)
+stable](https://img.shields.io/badge/lifecycle-stable-brightgreen.svg)](https://lifecycle.r-lib.org/articles/stages.html#stable)
 [![CRAN
 status](https://www.r-pkg.org/badges/version/PurpleAir)](https://CRAN.R-project.org/package=PurpleAir)
 [![R-CMD-check](https://github.com/cole-brokamp/PurpleAir/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/cole-brokamp/PurpleAir/actions/workflows/R-CMD-check.yaml)
@@ -49,12 +49,12 @@ Developer API
 key](https://develop.purpleair.com/sign-in?redirectURL=%2Fdashboards%2Fkeys)
 linked to a Google account. Functions in the package each take a
 `purple_air_api_key` argument or your key can be stored in an
-environment variable called `PURPLE_AIR_API_KEY`). To check your key,
+environment variable called `PURPLE_AIR_API_KEY`. To check your key,
 use:
 
 ``` r
 check_api_key(Sys.getenv("PURPLE_AIR_API_KEY"))
-#> ✔ Using valid 'READ' key with version V1.0.14-0.0.57 of the PurpleAir API on 2024-07-07 19:17:31
+#> ✔ Using valid 'READ' key with version V1.0.14-0.0.57 of the PurpleAir API on 1720397842
 ```
 
 Get the latest data from a single PurpleAir sensor, defined by its
@@ -64,16 +64,16 @@ Get the latest data from a single PurpleAir sensor, defined by its
 get_sensor_data(sensor_index = 175413,
                 fields = c("name", "last_seen", "pm2.5_cf_1", "pm2.5_atm"))
 #> $last_seen
-#> [1] "2024-07-07 19:16:12 EDT"
+#> [1] "2024-07-07 20:16:13 EDT"
 #> 
 #> $name
 #> [1] "JN-Clifton,OH"
 #> 
 #> $pm2.5_atm
-#> [1] 19.1
+#> [1] 9.7
 #> 
 #> $pm2.5_cf_1
-#> [1] 19.1
+#> [1] 9.7
 ```
 
 Get the latest data from many PurpleAir sensors, defined by their sensor
@@ -85,16 +85,22 @@ get_sensors_data(x = as.integer(c(175257, 175413)),
 #> # A tibble: 2 × 5
 #>   sensor_index last_seen           name          pm2.5_atm pm2.5_cf_1
 #>          <int> <dttm>              <chr>             <dbl>      <dbl>
-#> 1       175257 2024-07-07 19:16:30 Lillard            10.1       10.1
-#> 2       175413 2024-07-07 19:16:12 JN-Clifton,OH      19.1       19.1
+#> 1       175257 2024-07-07 20:16:30 Lillard             9.2        9.2
+#> 2       175413 2024-07-07 20:16:13 JN-Clifton,OH       9.7        9.7
 ```
 
-a geographic bounding box,
+a geographic [bounding box](http://bboxfinder.com),
 
 ``` r
-cincy::tract_tigris_2020 |>
-  sf::st_transform(4326) |>
-  sf::st_bbox() |>
+sf::st_bbox(
+  c(
+    "xmin" = -84.82030,
+    "ymin" = 39.02153,
+    "xmax" = -84.25633,
+    "ymax" = 39.31206
+  ),
+  crs = 4326
+) |>
   get_sensors_data(fields = c("name"))
 #> # A tibble: 45 × 2
 #>    sensor_index name              
@@ -116,20 +122,20 @@ or a date from which sensors must have been modified since.
 
 ``` r
 get_sensors_data(as.POSIXct(Sys.time()) - 60, fields = "name")
-#> # A tibble: 8,870 × 2
-#>    sensor_index name                               
-#>           <int> <chr>                              
-#>  1          334 "Moody Ave"                        
-#>  2          387 "Monmouth Drive P1"                
-#>  3          443 "Weber-Morgan Health Department P1"
-#>  4          453 "LRAPA-Oakridge City Hall"         
-#>  5          469 "Sunnyside (interieur)"            
-#>  6          473 "Sunnyside 93727"                  
-#>  7          547 "AQMD_RTI_1"                       
-#>  8          749 "Agia"                             
-#>  9          820 "Granite Basement"                 
-#> 10          828 "Acacia Street N Parksville,BC "   
-#> # ℹ 8,860 more rows
+#> # A tibble: 8,665 × 2
+#>    sensor_index name                    
+#>           <int> <chr>                   
+#>  1          314 Parker                  
+#>  2          334 Moody Ave               
+#>  3          453 LRAPA-Oakridge City Hall
+#>  4          469 Sunnyside (interieur)   
+#>  5          473 Sunnyside 93727         
+#>  6          749 Agia                    
+#>  7          878 Hotel Galim             
+#>  8          928 Cobble Hill El          
+#>  9          968 Honeymoon Bay CC        
+#> 10          978 Hillerød f989           
+#> # ℹ 8,655 more rows
 ```
 
 Get historical data from a single PurpleAir sensor:
