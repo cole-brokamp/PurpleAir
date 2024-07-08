@@ -1,6 +1,6 @@
 Package: PurpleAir
 Title: Query the PurpleAir API
-Version: 0.1.0
+Version: 1.0.0
 Authors@R: 
     person("Cole", "Brokamp", , "cole@colebrokamp.com", role = c("aut", "cre", "cph"),
            comment = c(ORCID = "0000-0002-0289-3151"))
