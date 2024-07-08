@@ -1,10 +1,10 @@
 Package: PurpleAir
-Title: Query the PurpleAir API
+Title: Query the 'PurpleAir' Application Programming Interface
 Version: 1.0.0
 Authors@R: 
     person("Cole", "Brokamp", , "cole@colebrokamp.com", role = c("aut", "cre", "cph"),
            comment = c(ORCID = "0000-0002-0289-3151"))
-Description: What the package does (one paragraph).
+Description: Send requests to the 'Purple Air' Application Programming Interface (API; <https://community.purpleair.com/c/data/api/18>). Check a PurpleAir API key and get information about the related organization. Download real-time data from a single Purple Air sensor or many sensors by sensor identifier, geographical bounding box, or time since modified. Download historical data from a single sensor.
 License: MIT + file LICENSE
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)

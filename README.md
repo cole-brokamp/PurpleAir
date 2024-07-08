@@ -22,17 +22,24 @@ the PurpleAir API. From their website:
 > PurpleAir was founded on principles of openness, sharing, and
 > community. It is to strengthen these principles and ensure the success
 > of our entire community that we put together updated [terms of
-> service](https://www.purpleair.com/terms), [data
-> license](https://www.purpleair.com/license), and [data
-> attribution](https://www.purpleair.com/attribution) requirements when
-> using PurpleAir data and this API. Please take a moment to review them
-> and note the attribution guide and data license agreement. If you have
-> any questions or need more information, we have an excellent resource
-> at <https://community.purpleair.com/c/data/api/>.
+> service](https://www2.purpleair.com/policies/terms-of-service), [data
+> license](https://www2.purpleair.com/pages/license), and [data
+> attribution](https://www2.purpleair.com/pages/attribution)
+> requirements when using PurpleAir data and this API. Please take a
+> moment to review them and note the attribution guide and data license
+> agreement. If you have any questions or need more information, we have
+> an excellent resource at
+> <https://community.purpleair.com/c/data/api/18>.
 
 ## Installation
 
-Install the development version of PurpleAir with:
+Install PurpleAir from CRAN with:
+
+``` r
+install.packages("PurpleAir")
+```
+
+Install the latest development version of PurpleAir from GitHub with:
 
 ``` r
 pak::pak("cole-brokamp/PurpleAir")
@@ -54,26 +61,26 @@ use:
 
 ``` r
 check_api_key(Sys.getenv("PURPLE_AIR_API_KEY"))
-#> ✔ Using valid 'READ' key with version V1.0.14-0.0.57 of the PurpleAir API on 1720397842
+#> ✔ Using valid 'READ' key with version V1.0.14-0.0.57 of the PurpleAir API on 1720399876
 ```
 
 Get the latest data from a single PurpleAir sensor, defined by its
-[sensor key](https://community.purpleair.com/t/sensor-index/4000):
+[sensor key](https://community.purpleair.com/t/sensor-indexes-and-read-keys/4000):
 
 ``` r
 get_sensor_data(sensor_index = 175413,
                 fields = c("name", "last_seen", "pm2.5_cf_1", "pm2.5_atm"))
 #> $last_seen
-#> [1] "2024-07-07 20:16:13 EDT"
+#> [1] "2024-07-07 20:50:13 EDT"
 #> 
 #> $name
 #> [1] "JN-Clifton,OH"
 #> 
 #> $pm2.5_atm
-#> [1] 9.7
+#> [1] 9.5
 #> 
 #> $pm2.5_cf_1
-#> [1] 9.7
+#> [1] 9.5
 ```
 
 Get the latest data from many PurpleAir sensors, defined by their sensor
@@ -85,8 +92,8 @@ get_sensors_data(x = as.integer(c(175257, 175413)),
 #> # A tibble: 2 × 5
 #>   sensor_index last_seen           name          pm2.5_atm pm2.5_cf_1
 #>          <int> <dttm>              <chr>             <dbl>      <dbl>
-#> 1       175257 2024-07-07 20:16:30 Lillard             9.2        9.2
-#> 2       175413 2024-07-07 20:16:13 JN-Clifton,OH       9.7        9.7
+#> 1       175257 2024-07-07 20:50:30 Lillard             9.9        9.9
+#> 2       175413 2024-07-07 20:50:13 JN-Clifton,OH       9.5        9.5
 ```
 
 a geographic [bounding box](http://bboxfinder.com),
@@ -122,20 +129,20 @@ or a date from which sensors must have been modified since.
 
 ``` r
 get_sensors_data(as.POSIXct(Sys.time()) - 60, fields = "name")
-#> # A tibble: 8,665 × 2
-#>    sensor_index name                    
-#>           <int> <chr>                   
-#>  1          314 Parker                  
-#>  2          334 Moody Ave               
-#>  3          453 LRAPA-Oakridge City Hall
-#>  4          469 Sunnyside (interieur)   
-#>  5          473 Sunnyside 93727         
-#>  6          749 Agia                    
-#>  7          878 Hotel Galim             
-#>  8          928 Cobble Hill El          
-#>  9          968 Honeymoon Bay CC        
-#> 10          978 Hillerød f989           
-#> # ℹ 8,655 more rows
+#> # A tibble: 5,299 × 2
+#>    sensor_index name                  
+#>           <int> <chr>                 
+#>  1          314 Parker                
+#>  2          749 Agia                  
+#>  3          928 Cobble Hill El        
+#>  4          934 Glenmohr Drive        
+#>  5          978 Hillerød f989         
+#>  6         1006 Platani               
+#>  7         1030 Trion Navarchon Old   
+#>  8         1090 Nicola Street West    
+#>  9         1128 USCEHC Lincoln Heights
+#> 10         1248 UNBC-PA13             
+#> # ℹ 5,289 more rows
 ```
 
 Get historical data from a single PurpleAir sensor:
