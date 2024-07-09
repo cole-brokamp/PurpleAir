@@ -1,6 +1,5 @@
 ## Resubmission
-* Fixed so that automated tests do not error if API key is not available and examples are not run by default.
-* Note on r-devel for windows is related to a falsely-identified misspelled word: 'PurpleAir'
+* Fixed spellings and single quote `PurpleAir` in Description
 
 ## R CMD check results
 
