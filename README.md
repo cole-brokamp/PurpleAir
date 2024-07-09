@@ -61,39 +61,40 @@ use:
 
 ``` r
 check_api_key(Sys.getenv("PURPLE_AIR_API_KEY"))
-#> ✔ Using valid 'READ' key with version V1.0.14-0.0.57 of the PurpleAir API on 1720399876
+#> ✔ Using valid 'READ' key with version V1.0.14-0.0.57 of the PurpleAir API on 1720549867
 ```
 
 Get the latest data from a single PurpleAir sensor, defined by its
-[sensor key](https://community.purpleair.com/t/sensor-indexes-and-read-keys/4000):
+[sensor
+key](https://community.purpleair.com/t/sensor-indexes-and-read-keys/4000):
 
 ``` r
 get_sensor_data(sensor_index = 175413,
                 fields = c("name", "last_seen", "pm2.5_cf_1", "pm2.5_atm"))
 #> $last_seen
-#> [1] "2024-07-07 20:50:13 EDT"
+#> [1] "2024-07-09 14:30:33 EDT"
 #> 
 #> $name
 #> [1] "JN-Clifton,OH"
 #> 
 #> $pm2.5_atm
-#> [1] 9.5
+#> [1] 28.3
 #> 
 #> $pm2.5_cf_1
-#> [1] 9.5
+#> [1] 28.7
 ```
 
 Get the latest data from many PurpleAir sensors, defined by their sensor
 keys,
 
 ``` r
-get_sensors_data(x = as.integer(c(175257, 175413)),
+get_sensors_data(x = c(175257, 175413),
                  fields = c("name", "last_seen", "pm2.5_cf_1", "pm2.5_atm"))
 #> # A tibble: 2 × 5
 #>   sensor_index last_seen           name          pm2.5_atm pm2.5_cf_1
 #>          <int> <dttm>              <chr>             <dbl>      <dbl>
-#> 1       175257 2024-07-07 20:50:30 Lillard             9.9        9.9
-#> 2       175413 2024-07-07 20:50:13 JN-Clifton,OH       9.5        9.5
+#> 1       175257 2024-07-09 14:28:53 Lillard            28.2       28.8
+#> 2       175413 2024-07-09 14:28:33 JN-Clifton,OH      29.6       30.2
 ```
 
 a geographic [bounding box](http://bboxfinder.com),
@@ -129,20 +130,20 @@ or a date from which sensors must have been modified since.
 
 ``` r
 get_sensors_data(as.POSIXct(Sys.time()) - 60, fields = "name")
-#> # A tibble: 5,299 × 2
-#>    sensor_index name                  
-#>           <int> <chr>                 
-#>  1          314 Parker                
-#>  2          749 Agia                  
-#>  3          928 Cobble Hill El        
-#>  4          934 Glenmohr Drive        
-#>  5          978 Hillerød f989         
-#>  6         1006 Platani               
-#>  7         1030 Trion Navarchon Old   
-#>  8         1090 Nicola Street West    
-#>  9         1128 USCEHC Lincoln Heights
-#> 10         1248 UNBC-PA13             
-#> # ℹ 5,289 more rows
+#> # A tibble: 8,815 × 2
+#>    sensor_index name                    
+#>           <int> <chr>                   
+#>  1           77 Sunnyside               
+#>  2          314 Parker                  
+#>  3          340 Ingram Road             
+#>  4          387 Monmouth Drive P1       
+#>  5          459 Flight Park North 2     
+#>  6          912 The Hub                 
+#>  7          930 Strathcona Terrace      
+#>  8          934 Glenmohr Drive          
+#>  9          978 Hillerød f989           
+#> 10          992 Cosgriff Catholic School
+#> # ℹ 8,805 more rows
 ```
 
 Get historical data from a single PurpleAir sensor:
@@ -160,16 +161,16 @@ my_history
 #> # A tibble: 432 × 5
 #>    time_stamp          pm1.0_cf_1 pm1.0_atm pm2.5_atm pm2.5_cf_1
 #>    <dttm>                   <dbl>     <dbl>     <dbl>      <dbl>
-#>  1 2024-07-03 23:40:00    2503.     1670.      1671.      2505. 
-#>  2 2024-07-04 06:50:00    2504.     1670.      1671.      2505. 
-#>  3 2024-07-03 22:10:00    2505.     1672.      1673.      2507. 
-#>  4 2024-07-04 07:10:00    2503.     1670.      1671.      2504. 
-#>  5 2024-07-04 09:40:00    2504.     1671.      1672.      2505. 
-#>  6 2024-07-04 11:30:00    2504.     1671.      1673.      2506. 
-#>  7 2024-07-04 03:40:00    2501.     1668.      1669.      2502. 
-#>  8 2024-07-03 22:20:00    2504.     1671.      1673.      2506. 
-#>  9 2024-07-04 03:00:00    2502.     1669.      1669.      2503. 
-#> 10 2024-07-04 18:50:00       8.32      8.32      10.1       10.1
+#>  1 2024-07-04 21:10:00     2505.     1671.     1672.      2506. 
+#>  2 2024-07-04 23:30:00     2510.     1676.     1680.      2513. 
+#>  3 2024-07-04 20:40:00       31.9      25.3      27.9       34.6
+#>  4 2024-07-04 20:30:00       16.5      14.2      16.5       18.9
+#>  5 2024-07-04 23:50:00     2509.     1675.     1678.      2512. 
+#>  6 2024-07-04 21:50:00     2513.     1678.     1683.      2517. 
+#>  7 2024-07-04 20:50:00      386.      262.      265.       390. 
+#>  8 2024-07-04 22:00:00     2512.     1678.     1682.      2516. 
+#>  9 2024-07-04 22:40:00     2536.     1690.     1699.      2549. 
+#> 10 2024-07-04 21:00:00      914.      612.      614.       916. 
 #> # ℹ 422 more rows
 ```
 
