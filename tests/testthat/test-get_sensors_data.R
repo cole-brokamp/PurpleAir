@@ -10,7 +10,9 @@ test_that("get_sensors_data works", {
         name = c("Lillard", "JN-Clifton,OH")
       )
     )
-  sf::st_bbox(
+
+  d_bb <-
+    sf::st_bbox(
     c(
       "xmin" = -84.82030,
       "ymin" = 39.02153,
@@ -19,9 +21,10 @@ test_that("get_sensors_data works", {
     ),
     crs = 4326
   ) |>
-    get_sensors_data(fields = c("name")) |>
-    expect_s3_class("tbl_df")
+    get_sensors_data(fields = c("name"))
 
+  expect_true("woolper" %in% d_bb$name)
+  
   # sensors modified in the last 60 seconds
   get_sensors_data(as.POSIXct(Sys.time()) - 60, fields = "name") |>
     expect_s3_class("tbl_df")

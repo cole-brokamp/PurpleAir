@@ -1,6 +1,6 @@
 Package: PurpleAir
 Title: Query the 'PurpleAir' Application Programming Interface
-Version: 1.0.0.9000
+Version: 1.0.1.9000
 Authors@R: 
     person("Cole", "Brokamp", , "cole@colebrokamp.com", role = c("aut", "cre", "cph"),
            comment = c(ORCID = "0000-0002-0289-3151"))
@@ -8,7 +8,7 @@ Description: Send requests to the 'PurpleAir' Application Programming Interface 
 License: MIT + file LICENSE
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
-RoxygenNote: 7.3.1
+RoxygenNote: 7.3.2
 Suggests: 
     sf,
     testthat (>= 3.0.0)
