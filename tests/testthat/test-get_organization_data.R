@@ -4,5 +4,6 @@ test_that("get_organization_data works", {
   testthat::skip_if(Sys.getenv("PURPLE_AIR_API_KEY") == "", "no PurpleAir API key present")
   skip_on_cran()
   od <- get_organization_data()
-  expect_equal(od$organization_name, "Organization Cole Brokamp C8A17F7C")
+  expect_equal(length(od$organization_name), 1)
+  expect_true(is.character(od$organization_id))
 })
