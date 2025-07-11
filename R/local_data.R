@@ -34,7 +34,6 @@ local_sensor_live <- function(ip_address) {
 #' @examples
 #' local_sensor_data("192.168.1.144") |>
 #'   _[c("DateTime", "current_temp_f", "current_humidity", "pm2.5_alt", "p25aqic")]
-#' tictoc::tic(); local_sensor_data("192.168.1.144"); tictoc::toc()
 local_sensor_data <- function(ip_address) {
   sensor_id <- ip_pam_id(ip_address)
   if (is.null(sensor_id)) stop("not a purple air monitor ip_address")

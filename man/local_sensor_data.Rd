@@ -19,5 +19,4 @@ Get latest data (updated every two minutes) from a sensor the local area network
 \examples{
 local_sensor_data("192.168.1.144") |>
   _[c("DateTime", "current_temp_f", "current_humidity", "pm2.5_alt", "p25aqic")]
-tictoc::tic(); local_sensor_data("192.168.1.144"); tictoc::toc()
 }
