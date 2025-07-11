@@ -4,9 +4,13 @@
 #' Data is updated every second on the device; this function waits
 #' half a second after each call, which takes less than half a second,
 #' ensuring sub one second updating freqency.
+#' @param ip_address address of purple air monitor on local area network
+#' to request data from
 #' @export
 #' @examples
+#' \dontrun{
 #' local_sensor_live("192.168.1.144")
+#' }
 local_sensor_live <- function(ip_address) {
   sensor_id <- ip_pam_id(ip_address)
   if (is.null(sensor_id)) stop("not a purple air monitor ip_address")
@@ -17,8 +21,14 @@ local_sensor_live <- function(ip_address) {
       httr2::req_perform() |>
       httr2::resp_body_json()
     Sys.sleep(.5)
-    cat("pm2.5 AQI: ", sensor_data$pm2.5_aqi, " [", Sys.time(), "]\r")
-    flush.console()
+    cat(
+      "pm2.5 (ug/m3): ",
+      sensor_data$pm2_5_cf_1,
+      " [",
+      format(Sys.time(), "%c"),
+      "]\r"
+    )
+    utils::flush.console()
   }
   return(invisible(NULL))
 }
@@ -33,7 +43,7 @@ local_sensor_live <- function(ip_address) {
 #' @export
 #' @examples
 #' local_sensor_data("192.168.1.144") |>
-#'   _[c("DateTime", "current_temp_f", "current_humidity", "pm2.5_alt", "p25aqic")]
+#'   _[c("DateTime", "current_temp_f", "current_humidity", "pm2_5_cf_1", "p25aqic")]
 local_sensor_data <- function(ip_address) {
   sensor_id <- ip_pam_id(ip_address)
   if (is.null(sensor_id)) stop("not a purple air monitor ip_address")
@@ -56,7 +66,7 @@ local_sensor_data <- function(ip_address) {
 #' (first three octets) used to generate IP addresses
 #' @param timeout numeric; number of seconds to wait for each ping
 #' @details
-#' If the {mirai} package is available, this function will ensure that
+#' If the mirai package is available, this function will ensure that
 #' at least version 1.1.0 of the purrr package is installed to scan the
 #' network in parallel, according to `mirai::daemons()` set by the user.
 #' This reduces the time it takes, but does not use a progress bar.

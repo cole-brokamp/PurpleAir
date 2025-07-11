@@ -20,7 +20,7 @@ All IP addresses within the network are pinged
 to possibly return a purple air monitor sensor ID.
 }
 \details{
-If the {mirai} package is available, this function will ensure that
+If the mirai package is available, this function will ensure that
 at least version 1.1.0 of the purrr package is installed to scan the
 network in parallel, according to \code{mirai::daemons()} set by the user.
 This reduces the time it takes, but does not use a progress bar.

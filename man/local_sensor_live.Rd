@@ -17,5 +17,7 @@ half a second after each call, which takes less than half a second,
 ensuring sub one second updating freqency.
 }
 \examples{
+\dontrun{
 local_sensor_live("192.168.1.144")
+}
 }
