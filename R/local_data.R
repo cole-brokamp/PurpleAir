@@ -42,8 +42,10 @@ local_sensor_live <- function(ip_address) {
 #' @return a list of data returned by the sensor
 #' @export
 #' @examples
+#' \dontrun{
 #' local_sensor_data("192.168.1.144") |>
 #'   _[c("DateTime", "current_temp_f", "current_humidity", "pm2_5_cf_1", "p25aqic")]
+#' }
 local_sensor_data <- function(ip_address) {
   sensor_id <- ip_pam_id(ip_address)
   if (is.null(sensor_id)) stop("not a purple air monitor ip_address")
