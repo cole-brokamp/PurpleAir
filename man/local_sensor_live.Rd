@@ -6,6 +6,10 @@
 \usage{
 local_sensor_live(ip_address)
 }
+\arguments{
+\item{ip_address}{address of purple air monitor on local area network
+to request data from}
+}
 \description{
 Stream the latest data from a sensor on the local area network.
 Data is updated every second on the device; this function waits

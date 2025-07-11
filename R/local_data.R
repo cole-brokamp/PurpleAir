@@ -55,47 +55,45 @@ local_sensor_data <- function(ip_address) {
 #' @param network_prefix character string; base IPv4 prefix
 #' (first three octets) used to generate IP addresses
 #' @param timeout numeric; number of seconds to wait for each ping
-#' @return a list of purple air monitor IDs named according to their IP address
+#' @details
+#' If the {mirai} package is available, this function will ensure that
+#' at least version 1.1.0 of the purrr package is installed to scan the
+#' network in parallel, according to `mirai::daemons()` set by the user.
+#' This reduces the time it takes, but does not use a progress bar.
+#' @return a list of purple air monitor IP addresses named according to their Sensor IDs
 #' @export
 #' @examples
 #' \dontrun{
+#' mirai::daemons(12)
 #' find_local_pam()
+#' mirai::daemons(0)
 #' }
-find_local_pam <- function(
-  network_prefix = "192.168.1",
-  timeout = 1,
-  find_multiple = FALSE
-) {
+find_local_pam <- function(network_prefix = "192.168.1", timeout = 1) {
   ip_list <- paste0(network_prefix, ".", 1:254)
-  # local({
-  #   for (ip in ip_list) {
-  #     cat("checking ", ip, "\r")
-  #     flush.console()
-  #     ping <- ip_pam_id(ip, timeout = timeout)
-  #     if (!is.null(ping)) {
-  #       message("🟣 found purple air monitor: ", ping)
-  #       names(ping) <- ip
-  #       pam_id <<- ping
-  #       break
-  #     }
-  #   }
-  # })
-  # pam_id
+  if (rlang::is_installed("mirai")) {
+    rlang::check_installed(
+      "purrr",
+      "scan network ip addresses in parallel",
+      version = "1.1.0"
+    )
+  }
+  ip_pam_id_par <-
+    purrr::in_parallel(
+      \(x) ip_pam_id(x, timeout = timeout),
+      timeout = timeout,
+      ip_pam_id = ip_pam_id
+    )
   pam_ids <- purrr::map(
     ip_list,
-    ip_pam_id,
-    timeout = timeout,
-    .progress = paste0(
-      "scanning ",
-      network_prefix,
-      ".* for purple air monitors 🟣"
-    )
+    ip_pam_id_par,
+    .progress = paste0("scanning ", network_prefix, ".*")
   )
   out <-
     pam_ids |>
     rlang::set_names(ip_list) |>
     purrr::compact() |>
     stats::na.omit()
+  out <- stats::setNames(names(out), out)
   return(out)
 }
 

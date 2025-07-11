@@ -4,11 +4,7 @@
 \alias{find_local_pam}
 \title{find purple area monitors on a local network}
 \usage{
-find_local_pam(
-  network_prefix = "192.168.1",
-  timeout = 1,
-  find_multiple = FALSE
-)
+find_local_pam(network_prefix = "192.168.1", timeout = 1)
 }
 \arguments{
 \item{network_prefix}{character string; base IPv4 prefix
@@ -17,14 +13,22 @@ find_local_pam(
 \item{timeout}{numeric; number of seconds to wait for each ping}
 }
 \value{
-a list of purple air monitor IDs named according to their IP address
+a list of purple air monitor IP addresses named according to their Sensor IDs
 }
 \description{
 All IP addresses within the network are pinged
 to possibly return a purple air monitor sensor ID.
 }
+\details{
+If the {mirai} package is available, this function will ensure that
+at least version 1.1.0 of the purrr package is installed to scan the
+network in parallel, according to \code{mirai::daemons()} set by the user.
+This reduces the time it takes, but does not use a progress bar.
+}
 \examples{
 \dontrun{
+mirai::daemons(12)
 find_local_pam()
+mirai::daemons(0)
 }
 }
