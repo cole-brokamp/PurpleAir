@@ -35,7 +35,7 @@ get_sensor_history <- function(sensor_index,
   avg_int <- as.integer(
     c(
       "real-time" = 0, "10min" = 10, "30min" = 30, "60min" = 60,
-      "6hr" = 360, "1day" = 1440, "1week" = 60, "1month" = 60, "1year" = 60
+      "6hr" = 360, "1day" = 1440, "1week" = 10800, "1month" = 43200, "1year" = 525600
     )[avg]
   )
   resp <-
