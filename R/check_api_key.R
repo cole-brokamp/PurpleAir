@@ -15,11 +15,13 @@
 #' check_api_key()
 #' try(check_api_key("foofy"))
 #' }
-check_api_key <- function(purple_air_api_key = Sys.getenv("PURPLE_AIR_API_KEY")) {
+check_api_key <- function(
+  purple_air_api_key = Sys.getenv("PURPLE_AIR_API_KEY")
+) {
   resp <- purple_air_request(
     purple_air_api_key = purple_air_api_key,
     resource = "keys",
-    success_code = as.integer(201)
+    success_code = as.integer(200)
   ) |>
     httr2::req_perform() |>
     httr2::resp_body_json()
