@@ -4,7 +4,7 @@ Version: 1.1.0
 Authors@R: 
     person("Cole", "Brokamp", , "cole@colebrokamp.com", role = c("aut", "cre", "cph"),
            comment = c(ORCID = "0000-0002-0289-3151"))
-Description: Send requests to the 'PurpleAir' Application Programming Interface (API; <https://community.purpleair.com/c/data/api/18>). Check a 'PurpleAir' API key and get information about the related organization. Download real-time data from a single 'PurpleAir' sensor or many sensors by sensor identifier, geographical bounding box, or time since modified. Download historical data from a single sensor. Stream realtime data from monitors on a local area neetwork.
+Description: Send requests to the 'PurpleAir' Application Programming Interface (API; <https://community.purpleair.com/c/data/api/18>). Check a 'PurpleAir' API key and get information about the related organization. Download real-time data from a single 'PurpleAir' sensor or many sensors by sensor identifier, geographical bounding box, or time since modified. Download historical data from a single sensor. Stream real time data from monitors on a local area network.
 License: MIT + file LICENSE
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
@@ -24,4 +24,4 @@ Imports:
     dplyr,
     glue
 Depends:
-    R (>= 3.1)
+    R (>= 4.1)
