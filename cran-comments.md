@@ -2,8 +2,8 @@
 
 0 errors | 0 warnings | 0 note
 
-* This is a bug fix update.
-* R CMD checks passed with above results on:
-  * R v4.4.1 (macos, windows, and ubuntu)
-  * R v4.3.3 (ubuntu) 
-  * A development version of R (ubuntu and windows)
+- This is a bug fix and new feature update.
+- R CMD checks passed with above results on:
+  - R v4.4.1 (macos, windows, and ubuntu)
+  - R v4.3.3 (ubuntu)
+  - A development version of R (ubuntu and windows)

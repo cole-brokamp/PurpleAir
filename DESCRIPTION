@@ -11,16 +11,17 @@ Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.3.2
 Suggests: 
     sf,
-    testthat (>= 3.0.0),
-    purrr (>= 1.1.0),
+    testthat (>= 3.0.0)
 Config/testthat/edition: 3
 URL: https://github.com/cole-brokamp/PurpleAir
 BugReports: https://github.com/cole-brokamp/PurpleAir/issues
 Imports: 
     httr2,
-    purrr,
+    purrr (>= 1.1.0),
     tibble,
     rlang,
     cli,
     dplyr,
     glue
+Depends:
+    R (>= 3.1)
