@@ -1,5 +1,7 @@
 ## R CMD check results
 
+Fixed 2 NOTES on CRAN checks related to spelling and missing dependency on R >=4.1.0
+
 0 errors | 0 warnings | 0 note
 
 - This is a bug fix and new feature update.
