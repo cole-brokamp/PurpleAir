@@ -32,9 +32,12 @@ purple_air_request <- function(
         "45"
       ))
     )
-  if (resource == "keys") req <- httr2::req_url_path_append(req, "keys")
-  if (resource == "organization")
+  if (resource == "keys") {
+    req <- httr2::req_url_path_append(req, "keys")
+  }
+  if (resource == "organization") {
     req <- httr2::req_url_path_append(req, "organization")
+  }
   if (resource == "sensors") {
     req <- httr2::req_url_path_append(req, "sensors")
     if (!is.null(sensor_index)) {

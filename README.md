@@ -61,7 +61,7 @@ use:
 
 ``` r
 check_api_key(Sys.getenv("PURPLE_AIR_API_KEY"))
-#> ✔ Using valid 'READ' key with version V1.0.14-0.0.58 of the PurpleAir API on 1728410515
+#> ✔ Using valid 'READ' key with version V1.2.0-1.1.45 of the PurpleAir API on 1758547191
 ```
 
 Get the latest data from a single PurpleAir sensor, defined by its
@@ -72,16 +72,16 @@ key](https://community.purpleair.com/t/sensor-indexes-and-read-keys/4000):
 get_sensor_data(sensor_index = 175413,
                 fields = c("name", "last_seen", "pm2.5_cf_1", "pm2.5_atm"))
 #> $last_seen
-#> [1] "2024-10-08 13:59:39 EDT"
+#> [1] "2025-09-22 09:17:55 EDT"
 #> 
 #> $name
 #> [1] "JN-Clifton,OH"
 #> 
 #> $pm2.5_atm
-#> [1] 0.9
+#> [1] 18.4
 #> 
 #> $pm2.5_cf_1
-#> [1] 0.9
+#> [1] 18.4
 ```
 
 Get the latest data from many PurpleAir sensors, defined by their sensor
@@ -93,8 +93,8 @@ get_sensors_data(x = c(175257, 175413),
 #> # A tibble: 2 × 5
 #>   sensor_index last_seen           name          pm2.5_atm pm2.5_cf_1
 #>          <int> <dttm>              <chr>             <dbl>      <dbl>
-#> 1       175257 2024-10-08 14:00:02 Lillard             1.4        1.4
-#> 2       175413 2024-10-08 14:01:39 JN-Clifton,OH       1          1
+#> 1       175257 2025-09-22 09:18:55 Lillard            18.5       18.5
+#> 2       175413 2025-09-22 09:17:55 JN-Clifton,OH      18.4       18.4
 ```
 
 a geographic [bounding box](http://bboxfinder.com),
@@ -110,40 +110,40 @@ sf::st_bbox(
   crs = 4326
 ) |>
   get_sensors_data(fields = c("name"))
-#> # A tibble: 56 × 2
-#>    sensor_index name                
-#>           <int> <chr>               
-#>  1        35225 Mt. Washington      
-#>  2       102568 SR32                
-#>  3       103282 Carolina pines      
-#>  4       111898 Bridgetown Sanctuary
-#>  5       120311 Loveland            
-#>  6       127885 Meals on Wheels     
-#>  7       127915 MSD 6               
-#>  8       127921 Groundwork          
-#>  9       130719 NKU KY DAQ          
-#> 10       156117 Tshs 1              
-#> # ℹ 46 more rows
+#> # A tibble: 63 × 2
+#>    sensor_index name                            
+#>           <int> <chr>                           
+#>  1       273763 Boone Block                     
+#>  2       280360 Pricely Gardens                 
+#>  3       283458 Wyoming                         
+#>  4       284772 Cincy Air Watch- Zoo            
+#>  5       284822 Cincy Air Watch- Citylink Center
+#>  6       285242 Cincy Air Watch- Wayne Park     
+#>  7        23621 Kenridge Lake                   
+#>  8        35225 Mt. Washington                  
+#>  9        90829 Whetsel &amp; Roe               
+#> 10       102568 SR32                            
+#> # ℹ 53 more rows
 ```
 
 or a date from which sensors must have been modified since.
 
 ``` r
 get_sensors_data(as.POSIXct(Sys.time()) - 60, fields = "name")
-#> # A tibble: 568 × 2
-#>    sensor_index name                                           
-#>           <int> <chr>                                          
-#>  1          978 Hillerød f989                                  
-#>  2         1294 Roberts Creek                                  
-#>  3         1638 Moab                                           
-#>  4         2372 SCSB_22                                        
-#>  5         2574 Berkeley Park and Coventry, Kensington, CA, USA
-#>  6         3088 Howe Neighborhood                              
-#>  7         3277 Shop                                           
-#>  8         3497 Olive                                          
-#>  9         5538 Hood River Weather                             
-#> 10         6408 Amberwood                                      
-#> # ℹ 558 more rows
+#> # A tibble: 11,906 × 2
+#>    sensor_index name                          
+#>           <int> <chr>                         
+#>  1       262161 Living Room                   
+#>  2       262253 Outrider Rd - Rolling Hills CA
+#>  3       262261 B L Zen                       
+#>  4       262309 Carbice Lab                   
+#>  5       262331 DHS Bella                     
+#>  6          275 Pleasanton                    
+#>  7       262427 Cane Island Inside            
+#>  8       262441 Chandler, AZ                  
+#>  9       262449 Rivas Canyon/Oracle Pl        
+#> 10          340 Ingram Road                   
+#> # ℹ 11,896 more rows
 ```
 
 Get historical data from a single PurpleAir sensor:
@@ -161,16 +161,16 @@ my_history
 #> # A tibble: 432 × 5
 #>    time_stamp          pm1.0_cf_1 pm1.0_atm pm2.5_atm pm2.5_cf_1
 #>    <dttm>                   <dbl>     <dbl>     <dbl>      <dbl>
-#>  1 2024-07-03 23:40:00    2503.     1670.      1671.      2505. 
-#>  2 2024-07-04 06:50:00    2504.     1670.      1671.      2505. 
-#>  3 2024-07-03 22:10:00    2505.     1672.      1673.      2507. 
-#>  4 2024-07-04 07:10:00    2503.     1670.      1671.      2504. 
-#>  5 2024-07-04 09:40:00    2504.     1671.      1672.      2505. 
-#>  6 2024-07-04 11:30:00    2504.     1671.      1673.      2506. 
-#>  7 2024-07-04 03:40:00    2501.     1668.      1669.      2502. 
-#>  8 2024-07-03 22:20:00    2504.     1671.      1673.      2506. 
-#>  9 2024-07-04 03:00:00    2502.     1669.      1669.      2503. 
-#> 10 2024-07-04 18:50:00       8.32      8.32      10.1       10.1
+#>  1 2024-07-04 21:10:00     2504.     1671.     1672.      2506. 
+#>  2 2024-07-04 23:30:00     2510.     1676.     1680       2513. 
+#>  3 2024-07-04 20:40:00       31.9      25.3      27.9       34.6
+#>  4 2024-07-04 20:30:00       16.5      14.2      16.5       18.9
+#>  5 2024-07-04 23:50:00     2509.     1675.     1678.      2512. 
+#>  6 2024-07-04 21:50:00     2513      1678      1683.      2517. 
+#>  7 2024-07-04 20:50:00      386.      262.      265.       390. 
+#>  8 2024-07-04 22:00:00     2512.     1678.     1682.      2516  
+#>  9 2024-07-04 22:40:00     2536.     1690.     1699.      2549. 
+#> 10 2024-07-04 21:00:00      914.      612.      614        916. 
 #> # ℹ 422 more rows
 ```
 
