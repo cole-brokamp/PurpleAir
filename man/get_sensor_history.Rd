@@ -11,7 +11,6 @@ get_sensor_history(
   end_timestamp,
   average = c("10min", "30min", "60min", "6hr", "1day", "1week", "1month", "1year",
     "real-time"),
-  purple_air_api_key = Sys.getenv("PURPLE_AIR_API_KEY"),
   read_key = NULL
 )
 }
@@ -25,8 +24,6 @@ get_sensor_history(
 \item{end_timestamp}{end time stamp of history to return (exclusive)}
 
 \item{average}{time frame to request averaged results for}
-
-\item{purple_air_api_key}{A character that is your PurpleAir API \code{READ} key}
 
 \item{read_key}{A character key required to read data from private devices}
 }

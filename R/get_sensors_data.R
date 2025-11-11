@@ -9,7 +9,6 @@
 #' @param fields A character vector of which 'sensor data fields' to return
 #' @param location_type character; restrict to only "outside" or "inside" sensors (Outside: 0, Inside: 1)
 #' @param max_age integer; filter results to only include sensors modified or updated within the last number of seconds
-#' @param purple_air_api_key Your PurpleAir API `READ` key
 #' @param read_keys A character vector of keys required to read data from private devices
 #' @returns A list of sensor data, named by the provided `fields`
 #' @export
@@ -41,7 +40,6 @@ get_sensors_data <- function(x,
                              fields,
                              location_type = c("both", "inside", "outside"),
                              max_age = as.integer(604800),
-                             purple_air_api_key = Sys.getenv("PURPLE_AIR_API_KEY"),
                              read_keys = NULL) {
   if (!rlang::is_character(fields)) cli::cli_abort("fields must be a character")
   if (!rlang::is_integer(max_age)) cli::cli_abort("max_age must be an integer")

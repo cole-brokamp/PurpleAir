@@ -1,3 +1,4 @@
+
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
 # PurpleAir
@@ -9,7 +10,6 @@ stable](https://img.shields.io/badge/lifecycle-stable-brightgreen.svg)](https://
 [![CRAN
 status](https://www.r-pkg.org/badges/version/PurpleAir)](https://CRAN.R-project.org/package=PurpleAir)
 [![R-CMD-check](https://github.com/cole-brokamp/PurpleAir/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/cole-brokamp/PurpleAir/actions/workflows/R-CMD-check.yaml)
-
 <!-- badges: end -->
 
 The goal of PurpleAir is to provide read access to the [PurpleAir
@@ -35,71 +35,72 @@ the PurpleAir API. From their website:
 
 Install PurpleAir from CRAN with:
 
-```r
+``` r
 install.packages("PurpleAir")
 ```
 
 Install the latest development version of PurpleAir from GitHub with:
 
-```r
+``` r
 pak::pak("cole-brokamp/PurpleAir")
 ```
 
 ## Usage
 
-```r
+``` r
 library(PurpleAir)
 ```
 
 Querying data from the PurpleAir API requires a free [PurpleAir
 Developer API
 key](https://develop.purpleair.com/sign-in?redirectURL=%2Fdashboards%2Fkeys)
-linked to a Google account. Functions in the package each take a
-`purple_air_api_key` argument or your key can be stored in an
-environment variable called `PURPLE_AIR_API_KEY`. To check your key,
-use:
+linked to a Google account. Functions in the package read your key from
+the environment variable `PURPLE_AIR_API_KEY`. To check your key, use:
 
-```r
-check_api_key(Sys.getenv("PURPLE_AIR_API_KEY"))
-#> ✔ Using valid 'READ' key with version V1.2.0-1.1.45 of the PurpleAir API on 1758547191
+``` r
+check_api_key()
+#> ✔ Using valid 'READ' key with version V1.2.0-1.1.45 of the PurpleAir API on 1762872892
 ```
+
+Set `PURPLE_AIR_API_KEY` in your `.Renviron` or via
+`Sys.setenv(PURPLE_AIR_API_KEY = "your-key")` before making requests.
 
 Get the latest data from a single PurpleAir sensor, defined by its
 [sensor
 key](https://community.purpleair.com/t/sensor-indexes-and-read-keys/4000):
 
-```r
+``` r
 get_sensor_data(sensor_index = 175413,
                 fields = c("name", "last_seen", "pm2.5_cf_1", "pm2.5_atm"))
 #> $last_seen
-#> [1] "2025-09-22 09:17:55 EDT"
-#>
+#> [1] "2025-11-11 09:53:13 EST"
+#> 
 #> $name
 #> [1] "JN-Clifton,OH"
-#>
+#> 
 #> $pm2.5_atm
-#> [1] 18.4
-#>
+#> [1] 2.8
+#> 
 #> $pm2.5_cf_1
-#> [1] 18.4
+#> [1] 2.8
 ```
 
 Get the latest data from many PurpleAir sensors, defined by their sensor
 keys,
 
-```r
+``` r
 get_sensors_data(x = c(175257, 175413),
                  fields = c("name", "last_seen", "pm2.5_cf_1", "pm2.5_atm"))
 #> # A tibble: 2 × 5
 #>   sensor_index last_seen           name          pm2.5_atm pm2.5_cf_1
 #>          <int> <dttm>              <chr>             <dbl>      <dbl>
-#> 1       175257 2025-09-22 09:18:55 Lillard            18.5       18.5
-#> 2       175413 2025-09-22 09:17:55 JN-Clifton,OH      18.4       18.4
+#> 1       175257 2025-11-11 09:53:25 Lillard             4.2        4.2
+#> 2       175413 2025-11-11 09:53:13 JN-Clifton,OH       2.8        2.8
 ```
 
 a geographic [bounding box](http://bboxfinder.com),
 
-```r
+``` r
 sf::st_bbox(
   c(
     "xmin" = -84.82030,
@@ -111,44 +112,44 @@ sf::st_bbox(
 ) |>
   get_sensors_data(fields = c("name"))
 #> # A tibble: 63 × 2
-#>    sensor_index name
-#>           <int> <chr>
-#>  1       273763 Boone Block
-#>  2       280360 Pricely Gardens
-#>  3       283458 Wyoming
-#>  4       284772 Cincy Air Watch- Zoo
-#>  5       284822 Cincy Air Watch- Citylink Center
-#>  6       285242 Cincy Air Watch- Wayne Park
-#>  7        23621 Kenridge Lake
-#>  8        35225 Mt. Washington
-#>  9        90829 Whetsel &amp; Roe
-#> 10       102568 SR32
+#>    sensor_index name                            
+#>           <int> <chr>                           
+#>  1       273763 Boone Block                     
+#>  2       280360 Pricely Gardens                 
+#>  3       282656 Cincinnati State                
+#>  4       283458 Wyoming                         
+#>  5       284772 Cincy Air Watch- Zoo            
+#>  6       284822 Cincy Air Watch- Citylink Center
+#>  7       285186 Cincy Air Watch - Seven Hills   
+#>  8       285242 Cincy Air Watch- Wayne Park     
+#>  9        23621 Kenridge Lake                   
+#> 10        35225 Mt. Washington                  
 #> # ℹ 53 more rows
 ```
 
 or a date from which sensors must have been modified since.
 
-```r
+``` r
 get_sensors_data(as.POSIXct(Sys.time()) - 60, fields = "name")
-#> # A tibble: 11,906 × 2
-#>    sensor_index name
-#>           <int> <chr>
-#>  1       262161 Living Room
-#>  2       262253 Outrider Rd - Rolling Hills CA
-#>  3       262261 B L Zen
-#>  4       262309 Carbice Lab
-#>  5       262331 DHS Bella
-#>  6          275 Pleasanton
-#>  7       262427 Cane Island Inside
-#>  8       262441 Chandler, AZ
-#>  9       262449 Rivas Canyon/Oracle Pl
-#> 10          340 Ingram Road
-#> # ℹ 11,896 more rows
+#> # A tibble: 11,512 × 2
+#>    sensor_index name                          
+#>           <int> <chr>                         
+#>  1       262151 CleanAire NC Deck             
+#>  2       262161 Living Room                   
+#>  3           53 Lakeshore                     
+#>  4       262253 Outrider Rd - Rolling Hills CA
+#>  5       262261 B L Zen                       
+#>  6       262257 Woodbury Preschool Village    
+#>  7       262259 PurpleAir91107                
+#>  8       262265 Highlands Ranch               
+#>  9       262291 Cedar Street                  
+#> 10       262302 Cirencester Rd                
+#> # ℹ 11,502 more rows
 ```
 
 Get historical data from a single PurpleAir sensor:
 
-```r
+``` r
 my_history <-
   get_sensor_history(
     sensor_index = 175413,
@@ -161,22 +162,22 @@ my_history
 #> # A tibble: 432 × 5
 #>    time_stamp          pm1.0_cf_1 pm1.0_atm pm2.5_atm pm2.5_cf_1
 #>    <dttm>                   <dbl>     <dbl>     <dbl>      <dbl>
-#>  1 2024-07-04 21:10:00     2504.     1671.     1672.      2506.
-#>  2 2024-07-04 23:30:00     2510.     1676.     1680       2513.
-#>  3 2024-07-04 20:40:00       31.9      25.3      27.9       34.6
-#>  4 2024-07-04 20:30:00       16.5      14.2      16.5       18.9
-#>  5 2024-07-04 23:50:00     2509.     1675.     1678.      2512.
-#>  6 2024-07-04 21:50:00     2513      1678      1683.      2517.
-#>  7 2024-07-04 20:50:00      386.      262.      265.       390.
-#>  8 2024-07-04 22:00:00     2512.     1678.     1682.      2516
-#>  9 2024-07-04 22:40:00     2536.     1690.     1699.      2549.
-#> 10 2024-07-04 21:00:00      914.      612.      614        916.
+#>  1 2024-07-04 06:50:00      2504.     1670.     1671.      2505.
+#>  2 2024-07-04 09:40:00      2504.     1671.     1672.      2505.
+#>  3 2024-07-04 11:30:00      2504.     1671.     1673.      2506.
+#>  4 2024-07-03 22:20:00      2504.     1671.     1673.      2506.
+#>  5 2024-07-04 13:00:00      2505.     1672.     1675.      2508.
+#>  6 2024-07-04 10:50:00      2505.     1671.     1672.      2506.
+#>  7 2024-07-04 07:00:00      2504.     1670.     1671.      2504.
+#>  8 2024-07-04 02:40:00      2503.     1670.     1670.      2504.
+#>  9 2024-07-04 14:10:00      2504.     1671.     1672.      2506.
+#> 10 2024-07-04 08:30:00      2504.     1670.     1672.      2505.
 #> # ℹ 422 more rows
 ```
 
 and plot it:
 
-```r
+``` r
 my_history |>
   tidyr::pivot_longer(cols = tidyr::starts_with("pm"), names_to = "pollutant", values_to = "concentration") |>
   ggplot2::ggplot(ggplot2::aes(time_stamp, concentration, color = pollutant)) +

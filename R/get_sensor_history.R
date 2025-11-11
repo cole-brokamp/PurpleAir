@@ -7,7 +7,6 @@
 #' @param start_timestamp time stamp of first required history entry (inclusive)
 #' @param end_timestamp end time stamp of history to return (exclusive)
 #' @param average time frame to request averaged results for
-#' @param purple_air_api_key A character that is your PurpleAir API `READ` key
 #' @param read_key A character key required to read data from private devices
 #' @returns a list of sensor data, named by the provided `fields`
 #' @export
@@ -27,7 +26,6 @@ get_sensor_history <- function(sensor_index,
                                average = c("10min", "30min", "60min",
                                            "6hr", "1day", "1week",
                                            "1month", "1year", "real-time"),
-                               purple_air_api_key = Sys.getenv("PURPLE_AIR_API_KEY"),
                                read_key = NULL) {
   if (!rlang::is_integer(as.integer(sensor_index))) cli::cli_abort("sensor_index must be an integer")
   if (!rlang::is_character(fields)) cli::cli_abort("fields must be a character")

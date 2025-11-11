@@ -9,7 +9,6 @@ get_sensors_data(
   fields,
   location_type = c("both", "inside", "outside"),
   max_age = as.integer(604800),
-  purple_air_api_key = Sys.getenv("PURPLE_AIR_API_KEY"),
   read_keys = NULL
 )
 }
@@ -26,8 +25,6 @@ get_sensors_data(
 \item{location_type}{character; restrict to only "outside" or "inside" sensors (Outside: 0, Inside: 1)}
 
 \item{max_age}{integer; filter results to only include sensors modified or updated within the last number of seconds}
-
-\item{purple_air_api_key}{Your PurpleAir API \code{READ} key}
 
 \item{read_keys}{A character vector of keys required to read data from private devices}
 }

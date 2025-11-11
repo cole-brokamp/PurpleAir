@@ -4,10 +4,7 @@
 \alias{check_api_key}
 \title{Check Purple Air API Key}
 \usage{
-check_api_key(purple_air_api_key = Sys.getenv("PURPLE_AIR_API_KEY"))
-}
-\arguments{
-\item{purple_air_api_key}{A character that is your PurpleAir API \code{READ} key}
+check_api_key()
 }
 \value{
 If the key is valid, a message is emitted and the input is invisibly returned;
@@ -23,7 +20,12 @@ in source code and is used by default in each PurpleAir function.
 \examples{
 \dontrun{
 check_api_key()
-try(check_api_key("foofy"))
+try({
+  old_key <- Sys.getenv("PURPLE_AIR_API_KEY")
+  Sys.setenv(PURPLE_AIR_API_KEY = "foofy")
+  check_api_key()
+}, silent = TRUE)
+Sys.setenv(PURPLE_AIR_API_KEY = old_key)
 }
 }
 \seealso{
