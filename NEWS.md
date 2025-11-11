@@ -1,4 +1,4 @@
-# PurpleAir 1.1.1
+# PurpleAir dev
 
 - Removed unused argument `purple_air_api_key` from functions (thanks @AldenGriffith)
 
