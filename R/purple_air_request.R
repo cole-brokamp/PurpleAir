@@ -1,10 +1,15 @@
 purple_air_request <- function(
-  purple_air_api_key = Sys.getenv("PURPLE_AIR_API_KEY"),
   resource = c("keys", "organization", "sensors", "sensor_history"),
   sensor_index = NULL,
   success_code,
   ...
 ) {
+  purple_air_api_key <- Sys.getenv("PURPLE_AIR_API_KEY")
+  if (purple_air_api_key == "") {
+    cli::cli_abort(
+      "PURPLE_AIR_API_KEY environment variable must be set before calling the API"
+    )
+  }
   if (!rlang::is_integer(success_code))
     cli::cli_abort("success_code must be an integer")
   resource <- rlang::arg_match(resource)

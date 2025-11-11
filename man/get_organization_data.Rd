@@ -4,10 +4,7 @@
 \alias{get_organization_data}
 \title{Get Organization Data}
 \usage{
-get_organization_data(purple_air_api_key = Sys.getenv("PURPLE_AIR_API_KEY"))
-}
-\arguments{
-\item{purple_air_api_key}{A character that is your PurpleAir API \code{READ} key}
+get_organization_data()
 }
 \value{
 A list of organization info

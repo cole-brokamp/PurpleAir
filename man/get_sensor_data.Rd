@@ -4,19 +4,12 @@
 \alias{get_sensor_data}
 \title{Get Sensor Data}
 \usage{
-get_sensor_data(
-  sensor_index,
-  fields,
-  purple_air_api_key = Sys.getenv("PURPLE_AIR_API_KEY"),
-  read_key = NULL
-)
+get_sensor_data(sensor_index, fields, read_key = NULL)
 }
 \arguments{
 \item{sensor_index}{Integer (or numeric, character object coerceable to integer) \code{sensor_index}}
 
 \item{fields}{A character vector of which 'sensor data fields' to return}
-
-\item{purple_air_api_key}{A character that is your PurpleAir API \code{READ} key}
 
 \item{read_key}{A character key required to read data from private devices}
 }

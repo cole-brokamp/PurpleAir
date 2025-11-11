@@ -1,3 +1,7 @@
+# PurpleAir 1.1.1
+
+- Removed unused argument `purple_air_api_key` from functions (thanks @AldenGriffith)
+
 # PurpleAir 1.1.0
 
 - Added functions to stream data in realtime from monitors on local area networks
