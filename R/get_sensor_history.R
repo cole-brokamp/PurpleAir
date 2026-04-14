@@ -49,12 +49,33 @@ get_sensor_history <- function(sensor_index,
     ) |>
     httr2::req_perform() |>
     httr2::resp_body_json()
+  return(parse_sensor_history_response(resp))
+  ## md <- purrr::discard_at(resp, c("fields", "data"))
+}
+
+parse_sensor_history_response <- function(resp) {
+  expected_n_fields <- length(resp$fields)
+  row_lengths <- purrr::map_int(resp$data, length)
+  invalid_row_idx <- which(row_lengths != expected_n_fields)
+
+  if (length(invalid_row_idx) > 0) {
+    cli::cli_warn(c(
+      "PurpleAir history response included malformed rows; dropping them.",
+      "i" = "Dropped {length(invalid_row_idx)} row(s) where value count differed from field count ({expected_n_fields})."
+    ))
+  }
+
+  valid_rows <- resp$data[row_lengths == expected_n_fields]
+
+  if (length(valid_rows) == 0) {
+    return(tibble::as_tibble(stats::setNames(rep(list(numeric(0)), expected_n_fields), resp$fields)))
+  }
+
   out <-
-    purrr::map(resp$data, stats::setNames, resp$fields) |>
+    purrr::map(valid_rows, stats::setNames, resp$fields) |>
     purrr::modify(as.data.frame) |>
     purrr::list_rbind() |>
     tibble::as_tibble()
   out$time_stamp <- as.POSIXct.numeric(out$time_stamp)
   return(out)
-  ## md <- purrr::discard_at(resp, c("fields", "data"))
 }

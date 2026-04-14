@@ -11,3 +11,42 @@ test_that("get_sensor_history works", {
   ) |>
     expect_s3_class("tbl_df")
 })
+
+test_that("parse_sensor_history_response drops malformed rows", {
+  resp <- list(
+    fields = c("time_stamp", "pm2.5_atm"),
+    data = list(
+      list(1700000000, 5.1),
+      list(1700000600),
+      list(1700001200, 5.8)
+    )
+  )
+
+  expect_warning(
+    out <- parse_sensor_history_response(resp),
+    "malformed rows"
+  )
+
+  expect_s3_class(out, "tbl_df")
+  expect_equal(nrow(out), 2)
+  expect_equal(names(out), c("time_stamp", "pm2.5_atm"))
+})
+
+test_that("parse_sensor_history_response returns empty tibble when all rows are malformed", {
+  resp <- list(
+    fields = c("time_stamp", "pm2.5_atm"),
+    data = list(
+      list(1700000000),
+      list(1700000600)
+    )
+  )
+
+  expect_warning(
+    out <- parse_sensor_history_response(resp),
+    "malformed rows"
+  )
+
+  expect_s3_class(out, "tbl_df")
+  expect_equal(nrow(out), 0)
+  expect_equal(names(out), c("time_stamp", "pm2.5_atm"))
+})
