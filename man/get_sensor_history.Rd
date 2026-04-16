@@ -33,6 +33,7 @@ a list of sensor data, named by the provided \code{fields}
 \description{
 Retrieves the latest history of a single sensor matching the provided \code{sensor_index}.
 Find more details on sensor fields at https://api.purpleair.com/#api-sensors-get-sensor-history.
+NULL values are converted to \code{NA} in R.
 }
 \examples{
 \dontrun{

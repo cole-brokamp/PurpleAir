@@ -2,6 +2,7 @@
 #'
 #' Retrieves the latest history of a single sensor matching the provided `sensor_index`.
 #' Find more details on sensor fields at https://api.purpleair.com/#api-sensors-get-sensor-history.
+#' NULL values are converted to `NA` in R.
 #' @param sensor_index Integer (or numeric, character object coerceable to integer) `sensor_index`
 #' @param fields A character vector of which 'sensor data fields' to return
 #' @param start_timestamp time stamp of first required history entry (inclusive)
@@ -19,21 +20,42 @@
 #'   end_timestamp = as.POSIXct("2024-07-05")
 #' )
 #' }
-get_sensor_history <- function(sensor_index,
-                               fields,
-                               start_timestamp,
-                               end_timestamp,
-                               average = c("10min", "30min", "60min",
-                                           "6hr", "1day", "1week",
-                                           "1month", "1year", "real-time"),
-                               read_key = NULL) {
-  if (!rlang::is_integer(as.integer(sensor_index))) cli::cli_abort("sensor_index must be an integer")
-  if (!rlang::is_character(fields)) cli::cli_abort("fields must be a character")
+get_sensor_history <- function(
+  sensor_index,
+  fields,
+  start_timestamp,
+  end_timestamp,
+  average = c(
+    "10min",
+    "30min",
+    "60min",
+    "6hr",
+    "1day",
+    "1week",
+    "1month",
+    "1year",
+    "real-time"
+  ),
+  read_key = NULL
+) {
+  if (!rlang::is_integer(as.integer(sensor_index))) {
+    cli::cli_abort("sensor_index must be an integer")
+  }
+  if (!rlang::is_character(fields)) {
+    cli::cli_abort("fields must be a character")
+  }
   avg <- rlang::arg_match(average)
   avg_int <- as.integer(
     c(
-      "real-time" = 0, "10min" = 10, "30min" = 30, "60min" = 60,
-      "6hr" = 360, "1day" = 1440, "1week" = 10800, "1month" = 43200, "1year" = 525600
+      "real-time" = 0,
+      "10min" = 10,
+      "30min" = 30,
+      "60min" = 60,
+      "6hr" = 360,
+      "1day" = 1440,
+      "1week" = 10800,
+      "1month" = 43200,
+      "1year" = 525600
     )[avg]
   )
   resp <-
@@ -49,8 +71,10 @@ get_sensor_history <- function(sensor_index,
     ) |>
     httr2::req_perform() |>
     httr2::resp_body_json()
+
   out <-
     purrr::map(resp$data, stats::setNames, resp$fields) |>
+    purrr::map(\(.) lapply(., \(.x) ifelse(is.null(.x), NA, .x))) |>
     purrr::modify(as.data.frame) |>
     purrr::list_rbind() |>
     tibble::as_tibble()
