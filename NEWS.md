@@ -1,6 +1,7 @@
 # PurpleAir dev
 
 - Removed unused argument `purple_air_api_key` from functions (thanks @AldenGriffith)
+- Fixed bug where NULL sensor measurements could cause error (thanks @bvarick)
 
 # PurpleAir 1.1.0
 
