@@ -16,13 +16,13 @@
 get_sensor_data <- function(sensor_index,
                             fields,
                             read_key = NULL) {
-  if (!rlang::is_integer(as.integer(sensor_index))) cli::cli_abort("sensor_index must be an integer")
+  sensor_index <- coerce_sensor_index(sensor_index)
   if (!rlang::is_character(fields)) cli::cli_abort("fields must be a character")
   resp <-
     purple_air_request(
       resource = "sensors",
       success_code = as.integer(200),
-      sensor_index = as.integer(sensor_index),
+      sensor_index = sensor_index,
       fields = fields,
       read_key = read_key
     ) |>

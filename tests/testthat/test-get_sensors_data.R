@@ -29,3 +29,14 @@ test_that("get_sensors_data works", {
   get_sensors_data(as.POSIXct(Sys.time()) - 60, fields = "name") |>
     expect_s3_class("tbl_df")
 })
+
+test_that("get_sensors_data rejects unsupported x inputs before requesting", {
+  expect_error(
+    get_sensors_data(list(1), fields = "name"),
+    "must be one of"
+  )
+  expect_error(
+    get_sensors_data(c("175257", "abc"), fields = "name"),
+    "integer-like sensor indices"
+  )
+})

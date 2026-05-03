@@ -10,3 +10,14 @@ test_that("get_sensor_data works", {
   ) |>
     expect_identical(list(name = "JN-Clifton,OH", name = "JN-Clifton,OH", name = "JN-Clifton,OH"))
 })
+
+test_that("get_sensor_data rejects invalid sensor indices before requesting", {
+  expect_error(
+    get_sensor_data(175413.9, fields = "name"),
+    "whole-number sensor indices"
+  )
+  expect_error(
+    get_sensor_data("abc", fields = "name"),
+    "integer-like sensor indices"
+  )
+})
