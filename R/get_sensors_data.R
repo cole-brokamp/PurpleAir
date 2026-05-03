@@ -50,9 +50,10 @@ get_sensors_data <- function(x,
   )
   if (is.na(location_type)) location_type <- NULL
   if (inherits(x, c("integer", "numeric", "character"))) {
+    sensor_indices <- coerce_sensor_indices(x, arg = "x")
     the_req <-
       purple_air_request(
-        show_only = as.integer(x),
+        show_only = sensor_indices,
         max_age = max_age,
         location_type = location_type,
         resource = "sensors",
@@ -60,8 +61,7 @@ get_sensors_data <- function(x,
         fields = fields,
         read_keys = read_keys
       )
-  }
-  if (inherits(x, "bbox")) {
+  } else if (inherits(x, "bbox")) {
     rlang::check_installed("sf")
     if (!sf::st_crs(x) == sf::st_crs(4326)) {
       cli::cli_warn("Reprojecting bbox to WGS 84 projection.")
@@ -80,8 +80,7 @@ get_sensors_data <- function(x,
         fields = fields,
         read_keys = read_keys
       )
-  }
-  if (inherits(x, "POSIXct")) {
+  } else if (inherits(x, "POSIXct")) {
     the_req <-
       purple_air_request(
         modified_since = as.numeric(x),
@@ -92,6 +91,15 @@ get_sensors_data <- function(x,
         fields = fields,
         read_keys = read_keys
       )
+  } else {
+    cli::cli_abort(
+      paste(
+        "{.arg x} must be one of:",
+        "an integer/numeric/character vector of sensor indices,",
+        "an {.cls bbox} object, or",
+        "a {.cls POSIXct} timestamp"
+      )
+    )
   }
   resp <-
     the_req |>

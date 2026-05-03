@@ -38,9 +38,7 @@ get_sensor_history <- function(
   ),
   read_key = NULL
 ) {
-  if (!rlang::is_integer(as.integer(sensor_index))) {
-    cli::cli_abort("sensor_index must be an integer")
-  }
+  sensor_index <- coerce_sensor_index(sensor_index)
   if (!rlang::is_character(fields)) {
     cli::cli_abort("fields must be a character")
   }
@@ -62,7 +60,7 @@ get_sensor_history <- function(
     purple_air_request(
       resource = "sensor_history",
       success_code = as.integer(200),
-      sensor_index = as.integer(sensor_index),
+      sensor_index = sensor_index,
       start_timestamp = as.integer(start_timestamp),
       end_timestamp = as.integer(end_timestamp),
       average = avg_int,

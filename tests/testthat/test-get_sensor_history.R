@@ -11,3 +11,24 @@ test_that("get_sensor_history works", {
   ) |>
     expect_s3_class("tbl_df")
 })
+
+test_that("get_sensor_history rejects invalid sensor indices before requesting", {
+  expect_error(
+    get_sensor_history(
+      sensor_index = 175413.9,
+      fields = "pm2.5_atm",
+      start_timestamp = as.POSIXct("2024-07-02"),
+      end_timestamp = as.POSIXct("2024-07-03")
+    ),
+    "whole-number sensor indices"
+  )
+  expect_error(
+    get_sensor_history(
+      sensor_index = "abc",
+      fields = "pm2.5_atm",
+      start_timestamp = as.POSIXct("2024-07-02"),
+      end_timestamp = as.POSIXct("2024-07-03")
+    ),
+    "integer-like sensor indices"
+  )
+})
