@@ -17,6 +17,7 @@ get_sensors_data(
 \itemize{
 \item an integer (or numeric or character) vector will select sensors based on \code{sensor_index} (API: \code{show_only})
 \item a st_bbox object will select sensors geographically (API: \code{nwlat}, \code{nwlon}, \code{selat}, \code{selon})
+\item \code{sf} and \code{sfc} objects are not currently supported directly; use \code{sf::st_bbox()} first
 \item a POSIXct object will select sensors modified since the given time (API: \code{modified_since})
 }}
 

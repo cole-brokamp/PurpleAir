@@ -1,5 +1,6 @@
 # PurpleAir dev
 
+- Added an explicit error for `sf`/`sfc` inputs to `get_sensors_data()` that directs users to convert polygon geometries with `sf::st_bbox()` for now (thanks @lcarnegie)
 - Removed unused argument `purple_air_api_key` from functions (thanks @AldenGriffith)
 - Fixed bug where NULL sensor measurements could cause error (thanks @bvarick)
 
