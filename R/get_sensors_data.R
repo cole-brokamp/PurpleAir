@@ -5,6 +5,7 @@
 #' @param x an input object used to define multiple sensors:
 #' - an integer (or numeric or character) vector will select sensors based on `sensor_index` (API: `show_only`)
 #' - a st_bbox object will select sensors geographically (API: `nwlat`, `nwlon`, `selat`, `selon`)
+#' - `sf` and `sfc` objects are not currently supported directly; use `sf::st_bbox()` first
 #' - a POSIXct object will select sensors modified since the given time (API: `modified_since`)
 #' @param fields A character vector of which 'sensor data fields' to return
 #' @param location_type character; restrict to only "outside" or "inside" sensors (Outside: 0, Inside: 1)
@@ -61,6 +62,14 @@ get_sensors_data <- function(x,
         fields = fields,
         read_keys = read_keys
       )
+  } else if (inherits(x, c("sf", "sfc"))) {
+    cli::cli_abort(
+      c(
+        "{.arg x} cannot currently be an {.cls sf} or {.cls sfc} object.",
+        "i" = "Use {.fun sf::st_bbox} to convert polygon geometry to a bounding box before calling {.fun get_sensors_data}.",
+        "i" = "The PurpleAir API query will use the bounding box; post-filter the results with {.pkg sf} if you need sensors inside the original geometry."
+      )
+    )
   } else if (inherits(x, "bbox")) {
     rlang::check_installed("sf")
     if (!sf::st_crs(x) == sf::st_crs(4326)) {

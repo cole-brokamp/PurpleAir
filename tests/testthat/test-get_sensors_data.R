@@ -36,6 +36,14 @@ test_that("get_sensors_data rejects unsupported x inputs before requesting", {
     "must be one of"
   )
   expect_error(
+    get_sensors_data(structure(list(), class = c("sfc_POLYGON", "sfc")), fields = "name"),
+    "sf::st_bbox"
+  )
+  expect_error(
+    get_sensors_data(structure(data.frame(id = 1), class = c("sf", "data.frame")), fields = "name"),
+    "sf::st_bbox"
+  )
+  expect_error(
     get_sensors_data(c("175257", "abc"), fields = "name"),
     "integer-like sensor indices"
   )
