@@ -51,7 +51,7 @@ get_sensor_history <- function(
       "60min" = 60,
       "6hr" = 360,
       "1day" = 1440,
-      "1week" = 10800,
+      "1week" = 10080,
       "1month" = 43200,
       "1year" = 525600
     )[avg]

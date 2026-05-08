@@ -32,3 +32,37 @@ test_that("get_sensor_history rejects invalid sensor indices before requesting",
     "integer-like sensor indices"
   )
 })
+
+test_that("get_sensor_history maps 1week average to the API value", {
+  request_average <- NULL
+
+  testthat::local_mocked_bindings(
+    purple_air_request = function(..., average) {
+      request_average <<- average
+      list()
+    },
+    .env = environment(get_sensor_history)
+  )
+  testthat::local_mocked_bindings(
+    req_perform = identity,
+    resp_body_json = function(resp) {
+      force(resp)
+      list(
+        fields = c("time_stamp", "pm2.5_atm"),
+        data = list(list(1719878400, 5.5))
+      )
+    },
+    .package = "httr2"
+  )
+
+  out <- get_sensor_history(
+    sensor_index = 175413,
+    fields = "pm2.5_atm",
+    start_timestamp = as.POSIXct("2024-07-02", tz = "UTC"),
+    end_timestamp = as.POSIXct("2024-07-09", tz = "UTC"),
+    average = "1week"
+  )
+
+  expect_identical(request_average, 10080L)
+  expect_s3_class(out, "tbl_df")
+})
