@@ -98,7 +98,7 @@ get_sensors_data(x = c(175257, 175413),
 #> 2       175413 2025-11-11 09:53:13 JN-Clifton,OH       2.8        2.8
 ```
 
-a geographic [bounding box](http://bboxfinder.com),
+a geographic [bounding box](https://bboxfinder.com/),
 
 ``` r
 sf::st_bbox(

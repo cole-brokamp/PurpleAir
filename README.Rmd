@@ -69,7 +69,7 @@ get_sensors_data(x = c(175257, 175413),
                  fields = c("name", "last_seen", "pm2.5_cf_1", "pm2.5_atm"))
 ```
 
-a geographic [bounding box](http://bboxfinder.com),
+a geographic [bounding box](https://bboxfinder.com/),
 
 ```{r}
 sf::st_bbox(
